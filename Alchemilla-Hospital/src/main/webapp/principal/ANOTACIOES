@@ -1,0 +1,10 @@
+
+   <%=request.geTContextPath()%>
+   ${HOME}
+   menu_link${UM}
+   <%=request.getContextPath()%> ------------------- MENU
+
+${MSG}----pie
+    
+    
+    

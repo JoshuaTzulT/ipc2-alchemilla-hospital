@@ -1,7 +1,9 @@
-<link rel="stylesheet" href="../CSS/estilo.css"/>
+
 <div id="nav" class="vmenu">
     <a class="menu_link active" href="#">Pagina Principal</a>  
     <a class="menu_link" href="#">Nuestros Servicios</a>
+    <a class="menu_link" href="#">Medicos</a>
+    <a class="menu_link" href="#">Necesito una consulta</a>
     <a class="menu_link" href="#">Sobre Alchemilla</a>
 </div>
 

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../CSS/estilo.css"/>
+
 <div id="principal">
     <h2>Hospital Alchemilla</h2>
     <p>Detalles</p>

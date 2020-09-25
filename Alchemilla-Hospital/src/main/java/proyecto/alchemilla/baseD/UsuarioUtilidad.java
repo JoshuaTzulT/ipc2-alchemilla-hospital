@@ -38,23 +38,23 @@ public class UsuarioUtilidad {
     }
 
     public static List<Usuario> getListaUsuario(Connection con) throws SQLException {
-        String sql = "SELECT nombre_de_usuario, password, alias FROM usuario";
-        System.out.println(sql);
+        String query = "SELECT nombre_de_usuario, password, alias FROM usuario";
+        System.out.println(query);
 
-        PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        List<Usuario> list = new ArrayList<Usuario>();
+        List<Usuario> lista = new ArrayList<Usuario>();
 
         while (rs.next()) {
-            Usuario u = new Usuario();
-            u.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
-            u.setPassword(rs.getString("password"));
-            u.setAlias(rs.getString("alias"));
-            list.add(u);
+            Usuario usuario = new Usuario();
+            usuario.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
+            usuario.setPassword(rs.getString("password"));
+            usuario.setAlias(rs.getString("alias"));
+            lista.add(usuario);
 
         }
-        return list;
+        return lista;
     }
 
     public static List<Medico> getListaMedico(Connection con) throws SQLException {
@@ -68,23 +68,23 @@ public class UsuarioUtilidad {
                 + "fecha_inicio "
                 + "FROM medico";
 
-        PreparedStatement stm = con.prepareStatement(query);
-        ResultSet rs = stm.executeQuery();
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
 
-        List<Medico> list = new ArrayList<Medico>();
+        List<Medico> lista = new ArrayList<Medico>();
         while (rs.next()) {
-            Medico m = new Medico();
-            m.setNombre(rs.getString("nombre"));
-            m.setDpi(rs.getInt("dpi"));
-            m.setEmail(rs.getString("Email"));
-            m.setNumeroDeColegiado(rs.getString("numero_colegiado"));
-            m.setEspecialidad(rs.getString("especialidad"));
-            m.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
-            m.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));
-            m.setFechaDeInicio(rs.getString("fecha_inicio"));
-            list.add(m);
+            Medico medico = new Medico();
+            medico.setNombre(rs.getString("nombre"));
+            medico.setDpi(rs.getInt("dpi"));
+            medico.setEmail(rs.getString("Email"));
+            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
+            medico.setEspecialidad(rs.getString("especialidad"));
+            medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
+            medico.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));
+            medico.setFechaDeInicio(rs.getString("fecha_inicio"));
+            lista.add(medico);
         }
-        return list;
+        return lista;
     }
 
     public static List<CitaMedica> getListaCita(Connection con) throws SQLException {
@@ -93,10 +93,10 @@ public class UsuarioUtilidad {
                 + "fecha_hora,"
                 + "estado "
                 + "FROM cita_medica";
-        PreparedStatement stm = con.prepareStatement(query);
-        ResultSet rs = stm.executeQuery();
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
 
-        List<CitaMedica> list = new ArrayList<CitaMedica>();
+        List<CitaMedica> lista = new ArrayList<CitaMedica>();
         while (rs.next()) {
             CitaMedica cm = new CitaMedica();
             cm.setIdPaciente(rs.getInt("id_paciente"));
@@ -104,9 +104,9 @@ public class UsuarioUtilidad {
             cm.setFecha(rs.getString("DATE(fecha_hora)"));
             cm.setHora(rs.getString("TIME(fecha_hora)"));
             cm.setEstado(rs.getString("estado"));
-            list.add(cm);
+            lista.add(cm);
         }
-        return list;
+        return lista;
     }
     
     public static List<CitaLaboratorio> getListaCitaLaboratorio(Connection con) throws SQLException {
@@ -120,12 +120,12 @@ public class UsuarioUtilidad {
         PreparedStatement ps = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
         
-        List<CitaLaboratorio> list = new ArrayList<CitaLaboratorio>();
+        List<CitaLaboratorio> lista = new ArrayList<>();
         while(rs.next()){
             CitaLaboratorio cl = new CitaLaboratorio();
-            list.add(cl);
+            lista.add(cl);
         }
-        return list;
+        return lista;
     }
 
 }

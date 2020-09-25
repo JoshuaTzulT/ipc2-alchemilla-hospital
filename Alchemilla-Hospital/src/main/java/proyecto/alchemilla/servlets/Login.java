@@ -26,10 +26,10 @@ public class Login extends HttpServlet {
 //5        password = CryptoUtil.encode(password);
         try {
             Connection conn = Conexion.getConnection();
-            Usuario u = UsuarioUtilidad.login(conn, usuario, password);
+            Usuario usu = UsuarioUtilidad.login(conn, usuario, password);
 
-            if (u != null) {
-                request.getSession().setAttribute("USUARIO_ACTUAL", u);
+            if (usu != null) {
+                request.getSession().setAttribute("USUARIO_ACTUAL", usu);
                 conn.close();
 //4                request.setAttribute("HOME", "active");
 //4                request.getRequestDispatcher("/WEB-INF/view/home/index.jsp").forward(request, response);

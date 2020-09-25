@@ -1,2 +1,2 @@
 
-<div id="pieDePagina">sdfsadf</div>
+<div id="pieDePagina">PIE DE PÁGINA</div>

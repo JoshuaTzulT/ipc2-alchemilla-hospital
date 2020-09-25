@@ -17,28 +17,28 @@ import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Usuario;
 
 @WebServlet(name = "UsuarioGestion", urlPatterns = {"/UsuarioGestion"})
-public class UsuarioGestion extends HttpServlet {
+public class UsuarioGestion extends ServletComun {//7
 
-       @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String action = request.getParameter("accion");
+        
+        validar(request,response);//7
+        String accion = request.getParameter("accion");
         try {
             Connection conn = Conexion.getConnection();
-            if (action.equals("lista")) {
+            if (accion.equals("lista")) {
                 List<Usuario> lista = UsuarioUtilidad.getListaUsuario(conn);
-                String msg = "no hay informacion";
+                String mensaje = "no hay informacion";
                 if (lista.size() > 0) {
-                    msg = lista.size() + (lista.size() > 1 ? "registros" : "registro");
+                    mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
                 }
-                request.setAttribute("MSG", msg);
+                request.setAttribute("MENSAJE", mensaje);
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("/usuario/usuario.jsp").forward(request, response);
             }
         } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
             request.setAttribute("Error", e.getMessage());
-//            request.getRequestDispatcher("/WEB-INF/view/user/error.jsp").forward(request, response);
+           request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
         }
 
     }

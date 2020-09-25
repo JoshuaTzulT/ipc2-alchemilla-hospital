@@ -1,5 +1,5 @@
 //9
-package proyecto.alchemilla.accion;
+package proyecto.alchemilla.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

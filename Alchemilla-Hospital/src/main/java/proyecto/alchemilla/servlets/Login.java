@@ -31,8 +31,10 @@ public class Login extends HttpServlet {
             if (usu != null) {
                 request.getSession().setAttribute("USUARIO_ACTUAL", usu);
                 conn.close();
-//4                request.setAttribute("HOME", "active");
+                request.setAttribute("PRINCIPAL", "activo");
 //4                request.getRequestDispatcher("/WEB-INF/view/home/index.jsp").forward(request, response);
+//request.setAttribute("PRINCIPAL", "activo");
+//              request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
 
             } else {

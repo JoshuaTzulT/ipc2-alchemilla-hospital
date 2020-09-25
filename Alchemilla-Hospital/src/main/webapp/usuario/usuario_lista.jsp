@@ -34,6 +34,6 @@
     </tbody>
 </table>
           
-<!--            <a href="/UserManagement?action=new">Add New User</a>                         -->
+            <a href="<%=request.getContextPath()%>/UsuarioGestion?accion=nuevo">Añadir un nuevo usuario</a>                         
 </div>            
          

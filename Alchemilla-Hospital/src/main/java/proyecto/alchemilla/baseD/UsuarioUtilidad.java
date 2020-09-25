@@ -127,5 +127,32 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
+    
+    
+    public static boolean usuarioExiste(Connection conn, String userName) throws SQLException{  
+        String sql = "SELECT nombre_de_usuario FROM usuario WHERE nombre_de_usuario=?";
+        System.out.println(sql);       
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setString(1, userName);
+        ResultSet rs =stm.executeQuery();        
+        if(rs.next()){         
+           return true;
+        }
+        return false;  
+    }
+    
+    public static void insertarUsuario(Connection conn, Usuario u) throws SQLException{
+        String sql = "INSERT INTO usuario (nombre_de_usuario, password, email, alias) VALUES (?, ?, ?, ?)";
+        System.out.println(sql);       
+        PreparedStatement stm = conn.prepareStatement(sql);
+        int i=1;
+        stm.setString(i++, u.getNombreDeUsuario());
+        stm.setString(i++, u.getPassword());
+        stm.setString(i++, u.getEmail());
+        stm.setString(i++, u.getAlias());
+        stm.executeUpdate();        
+         
+    }
+    
 
 }

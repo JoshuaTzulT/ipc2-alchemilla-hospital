@@ -25,6 +25,7 @@ public class UsuarioUtilidad {
         int i = 1;
         ps.setString(i++, usuario);
         ps.setString(i++, password);
+       
 
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
@@ -152,6 +153,28 @@ public class UsuarioUtilidad {
         stm.setString(i++, u.getAlias());
         stm.executeUpdate();        
          
+    }
+    
+    public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
+        String query = "SELECT nombre_de_usuario, password, alias FROM usuario WHERE nombre_de_usuario = ? ";
+//        System.out.println(query);     
+        PreparedStatement ps = con.prepareStatement(query);
+        
+        int i = 1;
+        ps.setString(i++, nombre);
+        ResultSet rs = ps.executeQuery();
+
+        List<Usuario> lista = new ArrayList<Usuario>();
+
+        while (rs.next()) {
+            Usuario usuario = new Usuario();
+            usuario.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
+            usuario.setPassword(rs.getString("password"));
+            usuario.setAlias(rs.getString("alias"));
+            lista.add(usuario);
+
+        }
+        return lista;
     }
     
 

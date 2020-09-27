@@ -1,5 +1,5 @@
 <div id="principal">
-    <form action="<%=request.getContextPath()%>/CitaMedicaGestor?accion=insert" method="POST">
+    <form action="<%=request.getContextPath()%>/CitaMedicaGestion?accion=insert" method="POST">
         <table border="1">
 
             <tbody>
@@ -23,15 +23,6 @@
                     <td><input type="text" name="nombreDeMedico"></td>
                 </tr>  
 
-                <tr>
-                    <td>Fecha para la cita</td>
-                    <td><input type="text" name="fecha"></td>
-                </tr> 
-                
-                <tr>
-                    <td>Hora para la cita</td>
-                    <td><input type="text" name="hora"></td>
-                </tr> 
                
 
             </tbody>

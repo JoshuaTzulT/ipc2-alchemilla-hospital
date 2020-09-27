@@ -2,12 +2,13 @@
 <div id="nav" class="vmenu">
     <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/principal">PÁGINA PRINCIPAL</a>  
     <a class="menu_link${UG}" href="<%=request.getContextPath()%>/UsuarioGestion?accion=lista">LISTAR USUARIOS</a> <!--ESTO YA ES INNECESARIO-->
-    <a class="menu_link" href="#">LISTAR MÉDICOS</a>
+    <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">LISTAR MÉDICOS</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR MÉDICOS</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR CITAS MÉDICAS</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/UsuarioGestion?accion=nuevo">AGENDAR UNA CITA</a>
+    <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">AGENDAR UNA CITA MÉDICA</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">HISTORIAL MÉDICO</a>
         <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR CITA LABORATORIO</a>
+        <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">REALIZAR UN EXAMEN DE LABORATORIO</a>
 </div>
 
 <script>

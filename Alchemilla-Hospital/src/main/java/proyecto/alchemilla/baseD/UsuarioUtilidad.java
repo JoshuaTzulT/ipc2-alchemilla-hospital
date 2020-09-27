@@ -75,7 +75,7 @@ public class UsuarioUtilidad {
             Medico medico = new Medico();
             medico.setNombre(rs.getString("nombre"));
             medico.setDpi(rs.getInt("dpi"));
-            medico.setEmail(rs.getString("Email"));
+            medico.setEmail(rs.getString("email"));
             medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
             medico.setEspecialidad(rs.getString("especialidad"));
             medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
@@ -149,15 +149,18 @@ public class UsuarioUtilidad {
                 + "(id_paciente, "
                 + "nombre_paciente, "
                 + "id_medico, "
-                + "nombre_medico) "
-                + "VALUES (?, ?, ?, ?)";
+                + "nombre_medico, "
+                + "fecha_hora) "
+                + "VALUES (?, ?, ?, ?, ?)";
         System.out.println(sql);
+        System.out.println(cm.getFecha() +" "+ cm.getHora());
         PreparedStatement ps = conn.prepareStatement(sql);
         int i = 1;
         ps.setInt(i++, cm.getIdPaciente());
         ps.setString(i++, cm.getNombrePaciente());
         ps.setInt(i++, cm.getIdMedico());
         ps.setString(i++, cm.getNombreMedico());
+        ps.setString(i++, cm.getFecha() +" "+ cm.getHora());
         ps.executeUpdate();
     }
 

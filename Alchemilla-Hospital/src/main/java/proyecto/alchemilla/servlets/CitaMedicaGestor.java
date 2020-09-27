@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.CitaMedica;
-import proyecto.alchemilla.entidades.Usuario;
+import proyecto.alchemilla.entidades.Medico;
 
-@WebServlet(name = "CitaGestion", urlPatterns = {"/CitaGestion"})
-public class CitaGestion extends ServletComun {//7
+@WebServlet(name = "CitaMedicaGestor", urlPatterns = {"/CitaMedicaGestor"})
+public class CitaMedicaGestor extends ServletComun {//7
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class CitaGestion extends ServletComun {//7
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
             if (accion.equals("lista")) {
-                List<Usuario> lista = UsuarioUtilidad.getListaUsuario(conn);
+                List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
                 mensaje = "no hay informacion";
                 if (lista.size() > 0) {
                     mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
@@ -37,7 +37,7 @@ public class CitaGestion extends ServletComun {//7
                 titulo = "LISTADO";
 
                 request.setAttribute("lista", lista);
-                link = "/usuario/usuario.jsp";
+                link = "/usuario/medico.jsp";
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
@@ -49,7 +49,8 @@ public class CitaGestion extends ServletComun {//7
                 cm.setNombrePaciente(request.getParameter("nombreDePaciente"));
                 cm.setIdMedico(Integer.parseInt(request.getParameter("idDeMedico")));
                 cm.setNombreMedico(request.getParameter("nombreDeMedico"));
-
+                cm.setFecha(request.getParameter("fecha"));
+                cm.setHora(request.getParameter("hora"));
 
                 if (!UsuarioUtilidad.citaExiste(conn, cm.getNombrePaciente())) {
                     UsuarioUtilidad.insertarCita(conn, cm);

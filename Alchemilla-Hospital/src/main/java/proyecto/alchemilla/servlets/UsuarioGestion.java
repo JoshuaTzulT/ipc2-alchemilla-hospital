@@ -75,8 +75,8 @@ public class UsuarioGestion extends ServletComun {//7
                 usu.setEmail(request.getParameter("email"));
                 usu.setAlias(request.getParameter("alias"));
 
-                if (!UsuarioUtilidad.usuarioExiste(conn, usu.getNombreDeUsuario())) {
-                    UsuarioUtilidad.insertarUsuario(conn, usu);
+                if (!UsuarioUtilidad.citaExiste(conn, usu.getNombreDeUsuario())) {
+//                    UsuarioUtilidad.insertarCita(conn, usu);
                     mensaje = "REGISTRO GUARDADO!";
                 } else {
                     request.setAttribute("error", "REGISTRO DUPLICADO: '" + usu.getNombreDeUsuario() + "'");

@@ -3,10 +3,13 @@ package proyecto.alchemilla.entidades;
 
 public class CitaMedica {
     private int idPaciente;
+    private String nombrePaciente;
     private int idMedico;
+    private String nombreMedico;
     private String fecha;
     private String hora;
     private String estado;
+    
 
     public float getCosto() {
         return costo;
@@ -55,6 +58,22 @@ public class CitaMedica {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getNombreMedico() {
+        return nombreMedico;
+    }
+
+    public void setNombreMedico(String nombreMedico) {
+        this.nombreMedico = nombreMedico;
     }
     
     

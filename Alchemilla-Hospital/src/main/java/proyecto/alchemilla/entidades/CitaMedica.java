@@ -1,6 +1,6 @@
 //2
 package proyecto.alchemilla.entidades;
-
+import java.util.Date;
 public class CitaMedica {
     private int idPaciente;
     private String nombrePaciente;

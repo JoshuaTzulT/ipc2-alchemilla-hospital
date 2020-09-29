@@ -7,8 +7,10 @@ public class Laboratorista {
     private int dpi;
     private String telefono;
     private String email;
+    private String examen;
     private String registroMinisterio;
     private String diasHabiles;
+    private String password;
     private String fehcaInicio;
 
     public String getNombre() {
@@ -65,5 +67,21 @@ public class Laboratorista {
 
     public void setFehcaInicio(String fehcaInicio) {
         this.fehcaInicio = fehcaInicio;
+    }
+
+    public String getExamen() {
+        return examen;
+    }
+
+    public void setExamen(String examen) {
+        this.examen = examen;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

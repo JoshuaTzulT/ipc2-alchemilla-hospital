@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Cita;
+import proyecto.alchemilla.entidades.Consulta;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.entidades.Usuario;
 
@@ -125,7 +126,7 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static boolean citaExiste(Connection conn, String horario) throws SQLException {
         String sql = "SELECT hora "
                 + "FROM cita WHERE hora = ?";
@@ -138,6 +139,21 @@ public class UsuarioUtilidad {
         }
         return false;
     }
+    
+      public static boolean consultaExiste(Connection conn, String nombreConsulta) throws SQLException {
+        String sql = "SELECT tipo_de_consulta "
+                + "FROM consulta WHERE tipo_de_consulta = ?";
+        System.out.println(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, nombreConsulta);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        return false;
+    }
+    
+    
 
     public static void insertarCita(Connection conn, Cita cm) throws SQLException {
         String sql = "INSERT INTO cita "
@@ -148,7 +164,6 @@ public class UsuarioUtilidad {
                 + "hora) "
                 + "VALUES (?, ?, ?, ?, ?)";
         System.out.println(sql);
-        System.out.println(cm.getFecha() +" "+ cm.getHora());
         PreparedStatement ps = conn.prepareStatement(sql);
         int i = 1;
         ps.setInt(i++, cm.getIdPaciente());
@@ -159,6 +174,23 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
+    
+       public static void insertarConsulta(Connection conn, Consulta consulta) throws SQLException {
+        String sql = "INSERT INTO consulta "
+                + "(tipo_de_consulta, "
+                + "costo) "
+                + "VALUES (?, ?)";
+        System.out.println(sql);
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, consulta.getTipoDeConsulta());
+        ps.setFloat(i++, consulta.getPrecio());
+        ps.executeUpdate();
+        System.out.println("EJECUTADO");
+    }
+    
+    
 
     public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
         String query = "SELECT nombre_de_usuario, password, alias FROM usuario WHERE nombre_de_usuario = ? ";

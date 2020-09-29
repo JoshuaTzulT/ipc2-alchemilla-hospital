@@ -8,17 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
-import proyecto.alchemilla.entidades.CitaMedica;
+import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.entidades.Usuario;
 
 public class UsuarioUtilidad {
 
     public static Usuario login(Connection con, String usuario, String password) throws SQLException {
-        String sql = "SELECT nombre_de_usuario, "
-                + "password, "
-                + "alias "
-                + "FROM usuario WHERE nombre_de_usuario = ? and password = ?";
+        String sql = "SELECT nombre, "
+                + "passw "
+                + "FROM usuario WHERE nombre = ? and passw = ?";
 
         PreparedStatement ps = con.prepareStatement(sql);
         int i = 1;
@@ -28,8 +27,8 @@ public class UsuarioUtilidad {
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             Usuario u = new Usuario();
-            u.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
-            u.setAlias(rs.getString("alias"));
+            u.setNombreDeUsuario(rs.getString("nombre"));
+            u.setEmail("alias");
 
             return u;
         }
@@ -37,7 +36,7 @@ public class UsuarioUtilidad {
     }
 
     public static List<Usuario> getListaUsuario(Connection con) throws SQLException {
-        String query = "SELECT nombre_de_usuario, password, alias FROM usuario";
+        String query = "SELECT nombre, passw FROM usuario";
         System.out.println(query);
 
         PreparedStatement ps = con.prepareStatement(query);
@@ -47,9 +46,8 @@ public class UsuarioUtilidad {
 
         while (rs.next()) {
             Usuario usuario = new Usuario();
-            usuario.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
+            usuario.setNombreDeUsuario(rs.getString("nombre"));
             usuario.setPassword(rs.getString("password"));
-            usuario.setAlias(rs.getString("alias"));
             lista.add(usuario);
 
         }
@@ -86,27 +84,24 @@ public class UsuarioUtilidad {
         return lista;
     }
 
-    public static List<CitaMedica> getListaCita(Connection con) throws SQLException {
+    public static List<Cita> getListaCita(Connection con) throws SQLException {
         String query = "SELECT id_paciente, "
-                + "nombre_paciente,"
                 + "id_medico,"
-                + "nombre_medico,"
-                + "fecha_hora,"
-                + "estado "
-                + "FROM cita_medica";
+                + "tipo_de_consulta, "
+                + "fecha, "
+                + "hora, "
+                + "FROM cita";
         PreparedStatement ps = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        List<CitaMedica> lista = new ArrayList<CitaMedica>();
+        List<Cita> lista = new ArrayList<Cita>();
         while (rs.next()) {
-            CitaMedica cm = new CitaMedica();
+            Cita cm = new Cita();
             cm.setIdPaciente(rs.getInt("id_paciente"));
-            cm.setNombrePaciente(rs.getString("nombre_paciente"));
-            cm.setIdMedico(rs.getInt("id_medico"));
-            cm.setNombreMedico(rs.getString("nombre_medico"));
-            cm.setFecha(rs.getString("DATE(fecha_hora)"));
-            cm.setHora(rs.getString("TIME(fecha_hora)"));
-            cm.setEstado(rs.getString("estado"));
+            cm.setIdMedico(rs.getString("id_medico"));
+            cm.setTipoDeConsulta(rs.getString("tipo_de_consulta"));
+            cm.setFecha(rs.getString("fecha"));
+            cm.setHora(rs.getString("hora"));
             lista.add(cm);
         }
         return lista;
@@ -131,12 +126,12 @@ public class UsuarioUtilidad {
         return lista;
     }
 
-    public static boolean citaExiste(Connection conn, String nombrePaciente) throws SQLException {
-        String sql = "SELECT nombre_paciente "
-                + "FROM cita_medica WHERE nombre_paciente = ?";
+    public static boolean citaExiste(Connection conn, String horario) throws SQLException {
+        String sql = "SELECT hora "
+                + "FROM cita WHERE hora = ?";
         System.out.println(sql);
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, nombrePaciente);
+        ps.setString(1, horario);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return true;
@@ -144,24 +139,25 @@ public class UsuarioUtilidad {
         return false;
     }
 
-    public static void insertarCita(Connection conn, CitaMedica cm) throws SQLException {
-        String sql = "INSERT INTO cita_medica "
+    public static void insertarCita(Connection conn, Cita cm) throws SQLException {
+        String sql = "INSERT INTO cita "
                 + "(id_paciente, "
-                + "nombre_paciente, "
                 + "id_medico, "
-                + "nombre_medico, "
-                + "fecha_hora) "
+                + "tipo_de_consulta, "
+                + "fecha, "
+                + "hora) "
                 + "VALUES (?, ?, ?, ?, ?)";
         System.out.println(sql);
         System.out.println(cm.getFecha() +" "+ cm.getHora());
         PreparedStatement ps = conn.prepareStatement(sql);
         int i = 1;
         ps.setInt(i++, cm.getIdPaciente());
-        ps.setString(i++, cm.getNombrePaciente());
-        ps.setInt(i++, cm.getIdMedico());
-        ps.setString(i++, cm.getNombreMedico());
-        ps.setString(i++, cm.getFecha() +" "+ cm.getHora());
+        ps.setString(i++, cm.getIdMedico());
+        ps.setString(i++, cm.getTipoDeConsulta());
+        ps.setString(i++, cm.getFecha());
+        ps.setString(i++, cm.getHora());
         ps.executeUpdate();
+        System.out.println("EJECUTADO");
     }
 
     public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
@@ -179,7 +175,6 @@ public class UsuarioUtilidad {
             Usuario usuario = new Usuario();
             usuario.setNombreDeUsuario(rs.getString("nombre_de_usuario"));
             usuario.setPassword(rs.getString("password"));
-            usuario.setAlias(rs.getString("alias"));
             lista.add(usuario);
 
         }

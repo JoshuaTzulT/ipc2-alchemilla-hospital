@@ -1,11 +1,12 @@
 //9
-package proyecto.alchemilla.servlets;
+package proyecto.alchemilla.sesion;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import proyecto.alchemilla.servlets.ServletComun;
 import proyecto.alchemilla.servlets.ServletComun;
 
 @WebServlet(name = "principal", urlPatterns = {"/principal"})

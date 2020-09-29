@@ -6,12 +6,7 @@
                 <tr>
                     <td>Id Pacientre</td>
                     <td><input type="text" name="idDePaciente"></td>
-                </tr>   
-                
-                  <tr>
-                    <td>Nombre del paciente</td>
-                    <td><input type="text" name="nombreDePaciente"></td>
-                </tr>
+                </tr>                   
 
                 <tr>
                     <td>ID Medico</td>
@@ -19,8 +14,8 @@
                 </tr> 
 
                 <tr>
-                    <td>Nombre del Médico</td>
-                    <td><input type="text" name="nombreDeMedico"></td>
+                    <td>Tipo De Consulta</td>
+                    <td><input type="text" name="tipoDeConsulta"></td>
                 </tr>  
 
                 <tr>

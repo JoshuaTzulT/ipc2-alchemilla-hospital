@@ -1,5 +1,5 @@
 //4
-package proyecto.alchemilla.servlets;
+package proyecto.alchemilla.sesion;
 
 import java.io.IOException;
 import java.sql.Connection;

@@ -1,5 +1,5 @@
 //6
-package proyecto.alchemilla.servlets;
+package proyecto.alchemilla.gestor;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Usuario;
+import proyecto.alchemilla.servlets.ServletComun;
 
 @WebServlet(name = "UsuarioGestion", urlPatterns = {"/UsuarioGestion"})
 public class UsuarioGestion extends ServletComun {//7
@@ -73,7 +74,6 @@ public class UsuarioGestion extends ServletComun {//7
                 usu.setPassword(request.getParameter("password"));
 //                    u.setPassword(CryptoUtil.encode(request.getParameter("password")));
                 usu.setEmail(request.getParameter("email"));
-                usu.setAlias(request.getParameter("alias"));
 
                 if (!UsuarioUtilidad.citaExiste(conn, usu.getNombreDeUsuario())) {
 //                    UsuarioUtilidad.insertarCita(conn, usu);

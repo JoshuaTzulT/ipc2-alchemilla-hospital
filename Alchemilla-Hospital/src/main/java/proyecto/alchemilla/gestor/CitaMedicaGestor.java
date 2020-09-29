@@ -1,5 +1,5 @@
 //6
-package proyecto.alchemilla.servlets;
+package proyecto.alchemilla.gestor;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
-import proyecto.alchemilla.entidades.CitaMedica;
+import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Medico;
+import proyecto.alchemilla.servlets.ServletComun;
 
 @WebServlet(name = "CitaMedicaGestor", urlPatterns = {"/CitaMedicaGestor"})
 public class CitaMedicaGestor extends ServletComun {//7
@@ -41,25 +42,26 @@ public class CitaMedicaGestor extends ServletComun {//7
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
-                link = "/usuario/cita_nueva.jsp";
+                link = "/nuevo/cita_nueva.jsp";
             } else if (accion.equals("insert")) {
 
-                CitaMedica cm = new CitaMedica();
+                Cita cm = new Cita();
                 cm.setIdPaciente(Integer.parseInt(request.getParameter("idDePaciente")));
-                cm.setNombrePaciente(request.getParameter("nombreDePaciente"));
-                cm.setIdMedico(Integer.parseInt(request.getParameter("idDeMedico")));
-                cm.setNombreMedico(request.getParameter("nombreDeMedico"));
+                cm.setIdMedico(request.getParameter("idDeMedico"));
+                cm.setTipoDeConsulta(request.getParameter("tipoDeConsulta"));
                 cm.setFecha(request.getParameter("fecha"));
                 cm.setHora(request.getParameter("hora"));
 
-                if (!UsuarioUtilidad.citaExiste(conn, cm.getNombrePaciente())) {
+                if (!UsuarioUtilidad.citaExiste(conn, cm.getHora())) {
+                    System.out.println(cm.getHora());
                     UsuarioUtilidad.insertarCita(conn, cm);
                     mensaje = "REGISTRO GUARDADO!";
+                    System.out.println("GUARDADO");
                 } else {
-                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + cm.getNombrePaciente() + "'");
+                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + cm.getHora() + "'");
                 }
                 titulo = "Agendar nueva CITA";
-                link = "/usuario/cita_nueva.jsp";
+                link = "/nuevo/cita_nueva.jsp";
             }
             conn.close();
 

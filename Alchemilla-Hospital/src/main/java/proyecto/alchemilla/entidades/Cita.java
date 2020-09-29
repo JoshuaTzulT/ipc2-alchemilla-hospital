@@ -1,14 +1,12 @@
 //2
 package proyecto.alchemilla.entidades;
-import java.util.Date;
-public class CitaMedica {
-    private int idPaciente;
-    private String nombrePaciente;
-    private int idMedico;
-    private String nombreMedico;
+public class Cita {
+    private int idPaciente;  
+    private String idMedico;
+    private String tipoDeConsulta;
     private String fecha;
     private String hora;
-    private String estado;
+   ;
     
 
     public float getCosto() {
@@ -28,11 +26,11 @@ public class CitaMedica {
         this.idPaciente = idPaciente;
     }
 
-    public int getIdMedico() {
+    public String getIdMedico() {
         return idMedico;
     }
 
-    public void setIdMedico(int idMedico) {
+    public void setIdMedico(String idMedico) {
         this.idMedico = idMedico;
     }
 
@@ -52,28 +50,13 @@ public class CitaMedica {
         this.hora = hora;
     }
 
-    public String getEstado() {
-        return estado;
+
+    public String getTipoDeConsulta() {
+        return tipoDeConsulta;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
-    public String getNombreMedico() {
-        return nombreMedico;
-    }
-
-    public void setNombreMedico(String nombreMedico) {
-        this.nombreMedico = nombreMedico;
+    public void setTipoDeConsulta(String tipoDeConsulta) {
+        this.tipoDeConsulta = tipoDeConsulta;
     }
     
     

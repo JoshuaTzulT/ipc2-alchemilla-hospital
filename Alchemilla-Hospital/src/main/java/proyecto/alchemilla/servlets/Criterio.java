@@ -35,7 +35,7 @@ public class Criterio extends HttpServlet {
             request.setAttribute("UG", "activo");
             request.getRequestDispatcher("/usuario/medico.jsp").forward(request, response);
         } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-            request.setAttribute("Error", e.getMessage());
+            request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
         }
 
@@ -44,6 +44,8 @@ public class Criterio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        doGet(request, response);
 
     }
 

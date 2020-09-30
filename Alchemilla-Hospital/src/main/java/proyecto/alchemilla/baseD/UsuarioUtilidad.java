@@ -38,31 +38,31 @@ public class UsuarioUtilidad {
         return null;
     }
 
-    public static List<Usuario> getListaUsuario(Connection con) throws SQLException {
-        String query = "SELECT nombre, passw FROM usuario";
-        System.out.println(query);
-
-        PreparedStatement ps = con.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-
-        List<Usuario> lista = new ArrayList<Usuario>();
-
-        while (rs.next()) {
-            Usuario usuario = new Usuario();
-            usuario.setNombreDeUsuario(rs.getString("nombre"));
-            usuario.setPassword(rs.getString("password"));
-            lista.add(usuario);
-
-        }
-        return lista;
-    }
-
+//    public static List<Usuario> getListaUsuario(Connection con) throws SQLException {
+//        String query = "SELECT nombre, passw FROM usuario";
+//        System.out.println(query);
+//
+//        PreparedStatement ps = con.prepareStatement(query);
+//        ResultSet rs = ps.executeQuery();
+//
+//        List<Usuario> lista = new ArrayList<Usuario>();
+//
+//        while (rs.next()) {
+//            Usuario usuario = new Usuario();
+//            usuario.setNombreDeUsuario(rs.getString("nombre"));
+//            usuario.setPassword(rs.getString("password"));
+//            lista.add(usuario);
+//
+//        }
+//        return lista;
+//    }
     public static List<Medico> getListaMedico(Connection con) throws SQLException {
-        String query = "SELECT nombre,"
-                + " dpi,"
-                + "email, "
+        String query = "SELECT id_medico, "
+                + " nombre, "
                 + "numero_colegiado, "
+                + " dpi,"
                 + "especialidad, "
+                + "email, "
                 + "horario_atencion_inicio, "
                 + "horario_atencion_final, "
                 + "fecha_inicio "
@@ -74,11 +74,12 @@ public class UsuarioUtilidad {
         List<Medico> lista = new ArrayList<Medico>();
         while (rs.next()) {
             Medico medico = new Medico();
+            medico.setIdMedico(rs.getString("id_medico"));
             medico.setNombre(rs.getString("nombre"));
+            medico.setNumeroDeColegiado(rs.getInt("numero_colegiado"));
             medico.setDpi(rs.getInt("dpi"));
-            medico.setEmail(rs.getString("email"));
-//            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
             medico.setEspecialidad(rs.getString("especialidad"));
+            medico.setEmail(rs.getString("email"));
             medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
             medico.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));
             medico.setFechaDeInicio(rs.getString("fecha_inicio"));
@@ -128,8 +129,76 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static List<Examen> getListaExamen(Connection con) throws SQLException {
+        String query = "SELECT codigo_examen, "
+                + "nombre_examen, "
+                + "orden, "
+                + "descripcion, "
+                + "costo, "
+                + "informe FROM examen";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        List<Examen> lista = new ArrayList<>();
+        while (rs.next()) {
+            Examen ex = new Examen();
+            lista.add(ex);
+        }
+        return lista;
+    }
+
+    public static List<Consulta> getListaConsulta(Connection con) throws SQLException {
+        String query = "SELECT tipo_de_consulta, "
+                + "costo FROM consulta";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        List<Consulta> lista = new ArrayList<>();
+        while (rs.next()) {
+            Consulta consulta = new Consulta();
+            lista.add(consulta);
+        }
+        return lista;
+    }
+
+    public static List<Laboratorista> getListaLaboratorista(Connection con) throws SQLException {
+        String query = "SELECT id_laboratorista, "
+                + " nombre, "
+                + "registro_ministerio, "
+                + "dpi,"
+                + "telefono, "
+                + "examen, "
+                + "email, "
+                + "dias_labura, "
+                + "passw, "
+                + "fecha_inicio "
+                + "FROM laboratorista";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        List<Laboratorista> lista = new ArrayList<>();
+        while (rs.next()) {
+            Laboratorista lab = new Laboratorista();
+            lab.setIdLaboratorista(rs.getString("id_laboratorista"));
+            lab.setNombre(rs.getString("nombre"));
+            lab.setRegistroMinisterio(rs.getString("registro_ministerio"));
+            lab.setDpi(rs.getInt("dpi"));
+            lab.setTelefono(rs.getString("telefono"));
+            lab.setExamen(rs.getString("examen"));
+            lab.setEmail(rs.getString("email"));
+            lab.setDiasHabiles(rs.getString("dias_labura"));
+            lab.setPassword(rs.getString("passw"));
+            lab.setFechaInicio(rs.getString("fecha_inicio"));
+            lista.add(lab);
+        }
+        return lista;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static boolean citaExiste(Connection conn, String horario) throws SQLException {
         String sql = "SELECT hora "
                 + "FROM cita WHERE hora = ?";
@@ -168,8 +237,8 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-    
-       public static boolean laboratoristaExiste(Connection conn, String ministerio) throws SQLException {
+
+    public static boolean laboratoristaExiste(Connection conn, String ministerio) throws SQLException {
         String sql = "SELECT registro_ministerio "
                 + "FROM laboratorista WHERE registro_ministerio = ?";
         System.out.println(sql);
@@ -181,8 +250,8 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-       
-       public static boolean examenExiste(Connection conn, String nombre) throws SQLException {
+
+    public static boolean examenExiste(Connection conn, String nombre) throws SQLException {
         String sql = "SELECT nombre_examen "
                 + "FROM examen WHERE nombre_examen = ?";
         System.out.println(sql);
@@ -194,9 +263,7 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-    
-    
-    
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void insertarCita(Connection conn, Cita cm) throws SQLException {
         String sql = "INSERT INTO cita "
@@ -217,8 +284,8 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-     public static void insertarExamen(Connection conn, Examen examen) throws SQLException {
+
+    public static void insertarExamen(Connection conn, Examen examen) throws SQLException {
         String sql = "INSERT INTO examen "
                 + "(codigo_examen, "
                 + "nombre_examen, "
@@ -239,7 +306,6 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
 
     public static void insertarConsulta(Connection conn, Consulta consulta) throws SQLException {
         String sql = "INSERT INTO consulta "
@@ -286,8 +352,8 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-     public static void insertarLaboratorista(Connection conn, Laboratorista lb) throws SQLException {
+
+    public static void insertarLaboratorista(Connection conn, Laboratorista lb) throws SQLException {
         String sql = "INSERT INTO laboratorista "
                 + "(id_laboratorista, "
                 + "nombre, "
@@ -317,11 +383,11 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-    
 
     public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
-        String query = "SELECT nombre_de_usuario, password, alias FROM usuario WHERE nombre_de_usuario = ? ";
+        String query = "SELECT nombre, "
+                + "password, "
+                + "alias FROM usuario WHERE nombre_de_usuario = ? ";
 //        System.out.println(query);     
         PreparedStatement ps = con.prepareStatement(query);
 
@@ -342,30 +408,40 @@ public class UsuarioUtilidad {
     }
 
     public static List<Medico> buscarMedico(Connection con, String criterio) throws SQLException {
-        String query = "SELECT nombre,"
-                + " dpi,"
-                + "email, "
+        String query = "SELECT id_medico, "
+                + " nombre, "
                 + "numero_colegiado, "
+                + " dpi,"
                 + "especialidad, "
+                + "email, "
                 + "horario_atencion_inicio, "
                 + "horario_atencion_final, "
                 + "fecha_inicio "
-                + "FROM medico WHERE nombre LIKE  ? OR especialidad LIKE  ? ";
+                + "FROM medico WHERE nombre LIKE  ? OR especialidad LIKE  ? "
+                + "OR horario_atencion_inicio LIKE ? "
+                + "OR horario_atencion_final LIKE ? ";
+
 
         PreparedStatement ps = con.prepareStatement(query);
         int i = 1;
+        System.out.println(i);
         ps.setString(i++, "%" + criterio + "%");
         ps.setString(i++, "%" + criterio + "%");
+        ps.setString(i++, "%" + criterio + "%");
+        ps.setString(i++, "%" + criterio + "%");
+        System.out.println(i);
+
         ResultSet rs = ps.executeQuery();
 
         List<Medico> lista = new ArrayList<Medico>();
         while (rs.next()) {
             Medico medico = new Medico();
+            medico.setIdMedico(rs.getString("id_medico"));
             medico.setNombre(rs.getString("nombre"));
+            medico.setNumeroDeColegiado(rs.getInt("numero_colegiado"));
             medico.setDpi(rs.getInt("dpi"));
-            medico.setEmail(rs.getString("email"));
-//            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
             medico.setEspecialidad(rs.getString("especialidad"));
+            medico.setEmail(rs.getString("email"));
             medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
             medico.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));
             medico.setFechaDeInicio(rs.getString("fecha_inicio"));

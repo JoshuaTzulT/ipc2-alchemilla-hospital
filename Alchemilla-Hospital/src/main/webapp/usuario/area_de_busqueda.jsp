@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="CSS/estilo.css"/>
 <body>
 	<div class="logeo">
-		<form action="<%=request.getContextPath()%>/Criterio" method="GET">
+		<form action="<%=request.getContextPath()%>/Criterio" method="POST">
 			<div class="container">
 				<div class="row">
 					<div class="col" style="width: 100px;">

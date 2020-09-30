@@ -1,7 +1,6 @@
 
 <div id="nav" class="vmenu">
     <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/principal">PÁGINA PRINCIPAL</a>  
-    <a class="menu_link${UG}" href="<%=request.getContextPath()%>/UsuarioGestion?accion=lista">LISTAR USUARIOS</a> <!--ESTO YA ES INNECESARIO-->
     <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">LISTAR MÉDICOS</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR MÉDICOS</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR CITAS MÉDICAS</a>

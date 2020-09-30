@@ -69,8 +69,8 @@ public class ExamenesGestor extends ServletComun {//7
             request.setAttribute("MENSAJE", mensaje);
             request.setAttribute("TITULO", titulo);
             request.getRequestDispatcher(link).forward(request, response);
-        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-            request.setAttribute("Error", e.getMessage());
+        } catch (IOException | ClassNotFoundException | SQLException | NumberFormatException| ServletException e  ) {
+            request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
         }
 

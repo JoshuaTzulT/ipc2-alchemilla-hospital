@@ -3,7 +3,7 @@
 <%@page import="proyecto.alchemilla.entidades.Usuario"%>
 <%@page import="java.util.List"%>
 <div id="principal" >
-    <table border="1">
+    <table style="margin-top: 125px;margin-left: 60px;" border="1">
         <thead>
             <tr>
                 <th>#</th>
@@ -47,3 +47,32 @@
 
     <a href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">Añadir un nuevo usuario</a>                         
 </div>            
+
+
+
+
+
+
+<div class="logeo" style="margin-left: 425px;margin-top: 100px;">
+		<form action="/Alchemilla-Hospital/Criterio" method="POST">
+			<div class="container">
+				<div class="row">
+					<div class="col" style="width: 100px;">
+						<b>Usuario</b>
+					</div>
+					<div class="col">
+						<input type="text" placeholder="Nombre de usuario" name="nombre_de_usuario" required="">						
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="col"></div>
+					<div class="col">
+						<p class="login_error">
+                                                </p>   
+                                                <button type="submit">Ingresar</button>
+                                        </div>
+				</div>
+			</div>		
+		</form>		
+	</div>

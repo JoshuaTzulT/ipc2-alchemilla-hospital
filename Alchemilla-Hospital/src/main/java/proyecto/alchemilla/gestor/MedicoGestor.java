@@ -18,18 +18,38 @@ import proyecto.alchemilla.servlets.ServletComun;
 @WebServlet(name = "MedicoGestor", urlPatterns = {"/MedicoGestor"})
 public class MedicoGestor extends ServletComun {//7
 
+    private String almacenaje;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         validar(request, response);
         String accion = request.getParameter("accion");
+        String accionDos = request.getParameter("nombre_de_usuario");
         String titulo = "";
         String link = "";
         String mensaje = "";
+        almacenaje = accionDos;
         try {
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
-            if (accion.equals("lista")) {
+
+            if (almacenaje != null) {
+                System.out.println(almacenaje);
+                conn = Conexion.getConnection();
+                List<Medico> lista = UsuarioUtilidad.buscarMedico(conn, almacenaje);
+                 mensaje = "no hay informacion";
+                if (lista.size() > 0) {
+                    mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
+                }
+                request.setAttribute("MENSAJE", mensaje);
+                request.setAttribute("TITULO", "Listado");
+                request.setAttribute("lista", lista);
+                request.setAttribute("UG", "activo");
+                request.getRequestDispatcher("/usuario/medico.jsp").forward(request, response);
+            }
+
+            else if (accion.equals("lista")) {
                 List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
                 mensaje = "no hay informacion";
                 if (lista.size() > 0) {
@@ -56,7 +76,6 @@ public class MedicoGestor extends ServletComun {//7
                 medico.setHorarioDeAtencionInicio(request.getParameter("horaInicio"));
                 medico.setHorarioDeAtencionFinal(request.getParameter("horaFin"));
                 medico.setFechaDeInicio(request.getParameter("fechaContrato"));
-                
 
                 if (!UsuarioUtilidad.medicoExiste(conn, medico.getNumeroDeColegiado())) {
                     System.out.println(medico.getNumeroDeColegiado());

@@ -2,7 +2,7 @@
 <div id="nav" class="vmenu">
     <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/principal">PÁGINA PRINCIPAL</a>  
     <a class="menu_link" href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">LISTAR MÉDICOS</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR MÉDICOS</a>
+<!--    <a class="menu_link" href="/usuario/area_de_busqueda.jsp">BUSCAR MÉDICOS</a>-->
     <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">VER MIS CITAS MÉDICAS</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">INSERTAR MEDICO </a>
     <a class="menu_link" href="<%=request.getContextPath()%>/LaboratoristaGestor?accion=nuevo">INSERTAR LABORATORISTA </a>

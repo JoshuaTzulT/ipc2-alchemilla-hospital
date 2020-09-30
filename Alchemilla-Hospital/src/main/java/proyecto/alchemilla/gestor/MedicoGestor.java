@@ -42,26 +42,32 @@ public class MedicoGestor extends ServletComun {//7
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/medico_nuevo.jsp";
             } else if (accion.equals("insert")) {
 
-                Cita cm = new Cita();
-                cm.setIdPaciente(Integer.parseInt(request.getParameter("idDePaciente")));
-                cm.setIdMedico(request.getParameter("idDeMedico"));
-                cm.setTipoDeConsulta(request.getParameter("tipoDeConsulta"));
-                cm.setFecha(request.getParameter("fecha"));
-                cm.setHora(request.getParameter("hora"));
+                Medico medico = new Medico();
+                medico.setIdMedico(request.getParameter("idDeMedico"));
+                medico.setNombre(request.getParameter("nombreDeMedico"));
+                medico.setNumeroDeColegiado(Integer.parseInt(request.getParameter("numeroColegiado")));
+                medico.setDpi(Integer.parseInt(request.getParameter("dpi")));
+                medico.setTelefono(request.getParameter("telefono"));
+                medico.setEspecialidad(request.getParameter("especialidad"));
+                medico.setEmail(request.getParameter("email"));
+                medico.setHorarioDeAtencionInicio(request.getParameter("horaInicio"));
+                medico.setHorarioDeAtencionFinal(request.getParameter("horaFin"));
+                medico.setFechaDeInicio(request.getParameter("fechaContrato"));
+                
 
-                if (!UsuarioUtilidad.citaExiste(conn, cm.getHora())) {
-                    System.out.println(cm.getHora());
-                    UsuarioUtilidad.insertarCita(conn, cm);
+                if (!UsuarioUtilidad.medicoExiste(conn, medico.getNumeroDeColegiado())) {
+                    System.out.println(medico.getNumeroDeColegiado());
+                    UsuarioUtilidad.insertarMedico(conn, medico);
                     mensaje = "REGISTRO GUARDADO!";
                     System.out.println("GUARDADO");
                 } else {
-                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + cm.getHora() + "'");
+                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + medico.getNumeroDeColegiado() + "'");
                 }
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/medico_nuevo.jsp";
             }
             conn.close();
 

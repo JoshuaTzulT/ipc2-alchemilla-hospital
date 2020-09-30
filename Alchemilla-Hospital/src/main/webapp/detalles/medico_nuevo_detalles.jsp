@@ -15,7 +15,7 @@
 
 
                 <tr>
-                    <td>Número de colegiado/td>
+                    <td>Número de colegiado</td>
                     <td><input type="text" name="numeroColegiado"></td>
                 </tr> 
 

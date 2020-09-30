@@ -2,15 +2,16 @@
 package proyecto.alchemilla.entidades;
 
 public class Medico {
+    private String idMedico;
     private String nombre;
     private int dpi;
     private String email;
-    private String numeroDeColegiado;
+    private int numeroDeColegiado;
     private String especialidad;
     private String horarioDeAtencionInicio;
     private String horarioDeAtencionFinal;
     private String fechaDeInicio;
-
+    private String telefono;
     public String getNombre() {
         return nombre;
     }
@@ -35,11 +36,11 @@ public class Medico {
         this.email = email;
     }
 
-    public String getNumeroDeColegiado() {
+    public int getNumeroDeColegiado() {
         return numeroDeColegiado;
     }
 
-    public void setNumeroDeColegiado(String numeroDeColegiado) {
+    public void setNumeroDeColegiado(int numeroDeColegiado) {
         this.numeroDeColegiado = numeroDeColegiado;
     }
 
@@ -73,5 +74,21 @@ public class Medico {
 
     public void setHorarioDeAtencionFinal(String horarioDeAtencionFinal) {
         this.horarioDeAtencionFinal = horarioDeAtencionFinal;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getIdMedico() {
+        return idMedico;
+    }
+
+    public void setIdMedico(String idMedico) {
+        this.idMedico = idMedico;
     }
 }

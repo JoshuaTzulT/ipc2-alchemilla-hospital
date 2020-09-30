@@ -75,7 +75,7 @@ public class UsuarioUtilidad {
             medico.setNombre(rs.getString("nombre"));
             medico.setDpi(rs.getInt("dpi"));
             medico.setEmail(rs.getString("email"));
-            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
+//            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
             medico.setEspecialidad(rs.getString("especialidad"));
             medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
             medico.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));
@@ -127,6 +127,7 @@ public class UsuarioUtilidad {
         return lista;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static boolean citaExiste(Connection conn, String horario) throws SQLException {
         String sql = "SELECT hora "
                 + "FROM cita WHERE hora = ?";
@@ -139,8 +140,8 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-    
-      public static boolean consultaExiste(Connection conn, String nombreConsulta) throws SQLException {
+
+    public static boolean consultaExiste(Connection conn, String nombreConsulta) throws SQLException {
         String sql = "SELECT tipo_de_consulta "
                 + "FROM consulta WHERE tipo_de_consulta = ?";
         System.out.println(sql);
@@ -152,8 +153,19 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-    
-    
+
+    public static boolean medicoExiste(Connection conn, int colegiado) throws SQLException {
+        String sql = "SELECT numero_colegiado "
+                + "FROM medico WHERE numero_colegiado = ?";
+        System.out.println(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, colegiado);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        return false;
+    }
 
     public static void insertarCita(Connection conn, Cita cm) throws SQLException {
         String sql = "INSERT INTO cita "
@@ -174,8 +186,8 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-       public static void insertarConsulta(Connection conn, Consulta consulta) throws SQLException {
+
+    public static void insertarConsulta(Connection conn, Consulta consulta) throws SQLException {
         String sql = "INSERT INTO consulta "
                 + "(tipo_de_consulta, "
                 + "costo) "
@@ -189,8 +201,37 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-    
+
+    public static void insertarMedico(Connection conn, Medico medico) throws SQLException {
+        String sql = "INSERT INTO medico "
+                + "(id_medico, "
+                + "nombre, "
+                + "numero_colegiado, "
+                + "dpi, "
+                + "telefono, "
+                + "especialidad, "
+                + "email, "
+                + "horario_atencion_inicio, "
+                + "horario_atencion_final, "
+                + "fecha_inicio) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, medico.getIdMedico());
+        ps.setString(i++, medico.getNombre());
+        ps.setInt(i++, medico.getNumeroDeColegiado());
+        ps.setInt(i++, medico.getDpi());
+        ps.setString(i++, medico.getTelefono());
+        ps.setString(i++, medico.getEspecialidad());
+        ps.setString(i++, medico.getEmail());
+        ps.setString(i++, medico.getHorarioDeAtencionInicio());
+        ps.setString(i++, medico.getHorarioDeAtencionFinal());
+        ps.setString(i++, medico.getFechaDeInicio());
+        ps.executeUpdate();
+        System.out.println("EJECUTADO");
+    }
 
     public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
         String query = "SELECT nombre_de_usuario, password, alias FROM usuario WHERE nombre_de_usuario = ? ";
@@ -236,7 +277,7 @@ public class UsuarioUtilidad {
             medico.setNombre(rs.getString("nombre"));
             medico.setDpi(rs.getInt("dpi"));
             medico.setEmail(rs.getString("email"));
-            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
+//            medico.setNumeroDeColegiado(rs.getString("numero_colegiado"));
             medico.setEspecialidad(rs.getString("especialidad"));
             medico.setHorarioDeAtencionInicio(rs.getString("horario_atencion_inicio"));
             medico.setHorarioDeAtencionFinal(rs.getString("horario_atencion_final"));

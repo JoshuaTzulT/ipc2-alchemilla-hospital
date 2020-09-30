@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
-import proyecto.alchemilla.entidades.Cita;
+import proyecto.alchemilla.entidades.Examen;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
 
@@ -42,26 +42,27 @@ public class ExamenesGestor extends ServletComun {//7
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/examen_nuevo.jsp";
             } else if (accion.equals("insert")) {
 
-                Cita cm = new Cita();
-                cm.setIdPaciente(Integer.parseInt(request.getParameter("idDePaciente")));
-                cm.setIdMedico(request.getParameter("idDeMedico"));
-                cm.setTipoDeConsulta(request.getParameter("tipoDeConsulta"));
-                cm.setFecha(request.getParameter("fecha"));
-                cm.setHora(request.getParameter("hora"));
+                Examen ex = new Examen();
+                ex.setCodigoExamen(Integer.parseInt(request.getParameter("idDeExamen")));
+                ex.setNombreDelExamen(request.getParameter("nombreDeExamen"));
+                ex.setOrden(request.getParameter("orden"));
+                ex.setDescripcion(request.getParameter("descr"));
+                ex.setCosto(Float.parseFloat(request.getParameter("costoExamen")));
+                ex.setInforme(request.getParameter("informe"));
 
-                if (!UsuarioUtilidad.citaExiste(conn, cm.getHora())) {
-                    System.out.println(cm.getHora());
-                    UsuarioUtilidad.insertarCita(conn, cm);
+                if (!UsuarioUtilidad.examenExiste(conn, ex.getNombreDelExamen())) {
+                    System.out.println(ex.getNombreDelExamen());
+                    UsuarioUtilidad.insertarExamen(conn, ex);
                     mensaje = "REGISTRO GUARDADO!";
                     System.out.println("GUARDADO");
                 } else {
-                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + cm.getHora() + "'");
+                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + ex.getNombreDelExamen() + "'");
                 }
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/examen_nuevo.jsp";
             }
             conn.close();
 

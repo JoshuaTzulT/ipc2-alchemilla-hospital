@@ -8,6 +8,7 @@
     <a class="menu_link" href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">INSERTAR MEDICO </a>
     <a class="menu_link" href="<%=request.getContextPath()%>/LaboratoristaGestor?accion=nuevo">INSERTAR LABORATORISTA </a>
      <a class="menu_link" href="<%=request.getContextPath()%>/ConsultaGestor?accion=nuevo">INSERTAR CONSULTA </a>
+      <a class="menu_link" href="<%=request.getContextPath()%>/ExamenesGestor?accion=nuevo">INSERTAR EXAMEN </a>
     <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">AGENDAR UNA CITA MÉDICA</a>
     <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">HISTORIAL MÉDICO</a>
         <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">BUSCAR CITA LABORATORIO</a>

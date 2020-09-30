@@ -10,6 +10,7 @@ import java.util.List;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Consulta;
+import proyecto.alchemilla.entidades.Examen;
 import proyecto.alchemilla.entidades.Laboratorista;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.entidades.Usuario;
@@ -180,6 +181,19 @@ public class UsuarioUtilidad {
         }
         return false;
     }
+       
+       public static boolean examenExiste(Connection conn, String nombre) throws SQLException {
+        String sql = "SELECT nombre_examen "
+                + "FROM examen WHERE nombre_examen = ?";
+        System.out.println(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        return false;
+    }
     
     
     
@@ -203,6 +217,29 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
+    
+     public static void insertarExamen(Connection conn, Examen examen) throws SQLException {
+        String sql = "INSERT INTO examen "
+                + "(codigo_examen, "
+                + "nombre_examen, "
+                + "orden, "
+                + "descripcion, "
+                + "costo, "
+                + "informe) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 1;
+        ps.setInt(i++, examen.getCodigoExamen());
+        ps.setString(i++, examen.getNombreDelExamen());
+        ps.setString(i++, examen.getOrden());
+        ps.setString(i++, examen.getDescripcion());
+        ps.setFloat(i++, examen.getCosto());
+        ps.setString(i++, examen.getInforme());
+        ps.executeUpdate();
+        System.out.println("EJECUTADO");
+    }
+    
 
     public static void insertarConsulta(Connection conn, Consulta consulta) throws SQLException {
         String sql = "INSERT INTO consulta "

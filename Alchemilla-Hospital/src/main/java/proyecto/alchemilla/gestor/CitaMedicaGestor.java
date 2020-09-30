@@ -30,7 +30,7 @@ public class CitaMedicaGestor extends ServletComun {//7
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
             if (accion.equals("lista")) {
-                List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
+                List<Cita> lista = UsuarioUtilidad.getListaCita(conn);
                 mensaje = "no hay informacion";
                 if (lista.size() > 0) {
                     mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
@@ -38,7 +38,7 @@ public class CitaMedicaGestor extends ServletComun {//7
                 titulo = "LISTADO";
 
                 request.setAttribute("lista", lista);
-                link = "/usuario/medico.jsp";
+                link = "/usuario/cita.jsp";
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
@@ -46,6 +46,7 @@ public class CitaMedicaGestor extends ServletComun {//7
             } else if (accion.equals("insert")) {
 
                 Cita cm = new Cita();
+                cm.setCodigoCita(Integer.parseInt(request.getParameter("codigoCita")));
                 cm.setIdPaciente(Integer.parseInt(request.getParameter("idDePaciente")));
                 cm.setIdMedico(request.getParameter("idDeMedico"));
                 cm.setTipoDeConsulta(request.getParameter("tipoDeConsulta"));

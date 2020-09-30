@@ -1,6 +1,7 @@
 //2
 package proyecto.alchemilla.entidades;
 public class Cita {
+    private int codigoCita;
     private int idPaciente;  
     private String idMedico;
     private String tipoDeConsulta;
@@ -57,6 +58,14 @@ public class Cita {
 
     public void setTipoDeConsulta(String tipoDeConsulta) {
         this.tipoDeConsulta = tipoDeConsulta;
+    }
+
+    public int getCodigoCita() {
+        return codigoCita;
+    }
+
+    public void setCodigoCita(int codigoCita) {
+        this.codigoCita = codigoCita;
     }
     
     

@@ -89,11 +89,12 @@ public class UsuarioUtilidad {
     }
 
     public static List<Cita> getListaCita(Connection con) throws SQLException {
-        String query = "SELECT id_paciente, "
-                + "id_medico,"
+        String query = "SELECT codigo_cita, "
+                + "id_paciente, "
+                + "id_medico, "
                 + "tipo_de_consulta, "
                 + "fecha, "
-                + "hora, "
+                + "hora "
                 + "FROM cita";
         PreparedStatement ps = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -101,6 +102,7 @@ public class UsuarioUtilidad {
         List<Cita> lista = new ArrayList<Cita>();
         while (rs.next()) {
             Cita cm = new Cita();
+            cm.setIdPaciente(rs.getInt("codigo_cita"));
             cm.setIdPaciente(rs.getInt("id_paciente"));
             cm.setIdMedico(rs.getString("id_medico"));
             cm.setTipoDeConsulta(rs.getString("tipo_de_consulta"));
@@ -267,15 +269,17 @@ public class UsuarioUtilidad {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void insertarCita(Connection conn, Cita cm) throws SQLException {
         String sql = "INSERT INTO cita "
-                + "(id_paciente, "
+                + "(codigo_cita, "
+                + "id_paciente, "
                 + "id_medico, "
                 + "tipo_de_consulta, "
                 + "fecha, "
                 + "hora) "
-                + "VALUES (?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?)";
         System.out.println(sql);
         PreparedStatement ps = conn.prepareStatement(sql);
         int i = 1;
+        ps.setInt(i++, cm.getCodigoCita());
         ps.setInt(i++, cm.getIdPaciente());
         ps.setString(i++, cm.getIdMedico());
         ps.setString(i++, cm.getTipoDeConsulta());

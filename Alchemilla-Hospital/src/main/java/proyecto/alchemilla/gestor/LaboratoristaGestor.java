@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
-import proyecto.alchemilla.entidades.Cita;
+import proyecto.alchemilla.entidades.Laboratorista;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
 
@@ -42,26 +42,31 @@ public class LaboratoristaGestor extends ServletComun {//7
 
             } else if (accion.equals("nuevo")) {
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/laboratorista_nuevo.jsp";
             } else if (accion.equals("insert")) {
 
-                Cita cm = new Cita();
-                cm.setIdPaciente(Integer.parseInt(request.getParameter("idDePaciente")));
-                cm.setIdMedico(request.getParameter("idDeMedico"));
-                cm.setTipoDeConsulta(request.getParameter("tipoDeConsulta"));
-                cm.setFecha(request.getParameter("fecha"));
-                cm.setHora(request.getParameter("hora"));
+                Laboratorista lab = new Laboratorista();
+                lab.setIdLaboratorista(request.getParameter("idDeLaboratorista"));
+                lab.setNombre(request.getParameter("nombreDeLaboratorista"));
+                lab.setRegistroMinisterio(request.getParameter("registroMinisterio"));
+                lab.setDpi(Integer.parseInt(request.getParameter("dpi")));
+                lab.setTelefono(request.getParameter("telefono"));
+                lab.setExamen(request.getParameter("examen"));
+                lab.setEmail(request.getParameter("email"));
+                lab.setDiasHabiles(request.getParameter("diasTrabajo"));
+                lab.setPassword(request.getParameter("contraseña"));
+                lab.setFechaInicio(request.getParameter("contratoFecha"));
 
-                if (!UsuarioUtilidad.citaExiste(conn, cm.getHora())) {
-                    System.out.println(cm.getHora());
-                    UsuarioUtilidad.insertarCita(conn, cm);
+                if (!UsuarioUtilidad.laboratoristaExiste(conn, lab.getRegistroMinisterio())) {
+                    System.out.println(lab.getRegistroMinisterio());
+                    UsuarioUtilidad.insertarLaboratorista(conn, lab);
                     mensaje = "REGISTRO GUARDADO!";
                     System.out.println("GUARDADO");
                 } else {
-                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + cm.getHora() + "'");
+                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + lab.getRegistroMinisterio() + "'");
                 }
                 titulo = "Agendar nueva CITA";
-                link = "/nuevo/cita_nueva.jsp";
+                link = "/nuevo/laboratorista_nuevo.jsp";
             }
             conn.close();
 

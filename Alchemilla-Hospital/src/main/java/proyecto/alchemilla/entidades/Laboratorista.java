@@ -3,15 +3,16 @@ package proyecto.alchemilla.entidades;
 
 public class Laboratorista {
     
+    private String idLaboratorista;
     private String nombre;
+    private String registroMinisterio;
     private int dpi;
     private String telefono;
-    private String email;
     private String examen;
-    private String registroMinisterio;
+    private String email;
     private String diasHabiles;
     private String password;
-    private String fehcaInicio;
+    private String fechaInicio;
 
     public String getNombre() {
         return nombre;
@@ -60,15 +61,7 @@ public class Laboratorista {
     public void setDiasHabiles(String diasHabiles) {
         this.diasHabiles = diasHabiles;
     }
-
-    public String getFehcaInicio() {
-        return fehcaInicio;
-    }
-
-    public void setFehcaInicio(String fehcaInicio) {
-        this.fehcaInicio = fehcaInicio;
-    }
-
+    
     public String getExamen() {
         return examen;
     }
@@ -83,5 +76,21 @@ public class Laboratorista {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getIdLaboratorista() {
+        return idLaboratorista;
+    }
+
+    public void setIdLaboratorista(String idLaboratorista) {
+        this.idLaboratorista = idLaboratorista;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 }

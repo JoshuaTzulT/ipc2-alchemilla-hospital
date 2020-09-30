@@ -53,8 +53,8 @@
                 </tr>  
 
                 <tr>
-                    <td>Fecha de contratración</td>
-                    <td><input type="text" name="contratoFecha"></td>
+                    <td>Fecha de contratación</td>
+                    <td><input type="date" name="contratoFecha"></td>
                 </tr>  
 
             </tbody>

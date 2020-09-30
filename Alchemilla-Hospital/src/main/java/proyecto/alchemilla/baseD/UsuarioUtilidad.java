@@ -10,6 +10,7 @@ import java.util.List;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Consulta;
+import proyecto.alchemilla.entidades.Laboratorista;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.entidades.Usuario;
 
@@ -166,7 +167,23 @@ public class UsuarioUtilidad {
         }
         return false;
     }
-
+    
+       public static boolean laboratoristaExiste(Connection conn, String ministerio) throws SQLException {
+        String sql = "SELECT registro_ministerio "
+                + "FROM laboratorista WHERE registro_ministerio = ?";
+        System.out.println(sql);
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, ministerio);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void insertarCita(Connection conn, Cita cm) throws SQLException {
         String sql = "INSERT INTO cita "
                 + "(id_paciente, "
@@ -232,6 +249,39 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
+    
+     public static void insertarLaboratorista(Connection conn, Laboratorista lb) throws SQLException {
+        String sql = "INSERT INTO laboratorista "
+                + "(id_laboratorista, "
+                + "nombre, "
+                + "registro_ministerio, "
+                + "dpi, "
+                + "telefono, "
+                + "examen, "
+                + "email, "
+                + "dias_labura, "
+                + "passw, "
+                + "fecha_inicio) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, lb.getIdLaboratorista());
+        ps.setString(i++, lb.getNombre());
+        ps.setString(i++, lb.getRegistroMinisterio());
+        ps.setInt(i++, lb.getDpi());
+        ps.setString(i++, lb.getTelefono());
+        ps.setString(i++, lb.getExamen());
+        ps.setString(i++, lb.getEmail());
+        ps.setString(i++, lb.getDiasHabiles());
+        ps.setString(i++, lb.getPassword());
+        ps.setString(i++, lb.getFechaInicio());
+        ps.executeUpdate();
+        System.out.println("EJECUTADO");
+    }
+    
+    
 
     public static List<Usuario> getListaUsuarioCriterio(Connection con, String nombre) throws SQLException {
         String query = "SELECT nombre_de_usuario, password, alias FROM usuario WHERE nombre_de_usuario = ? ";

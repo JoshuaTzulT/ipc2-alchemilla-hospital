@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Cita;
-import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
 
 @WebServlet(name = "CitaMedicaGestor", urlPatterns = {"/CitaMedicaGestor"})

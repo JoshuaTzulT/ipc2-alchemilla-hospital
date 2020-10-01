@@ -16,9 +16,11 @@
             </tr>
         </thead>
         <tbody>
+           
             <%
                 int i = 1;
                     List<Cita> lista = (List) request.getAttribute("lista");
+                    
             %>
 
             <%
@@ -42,3 +44,5 @@
 
     <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Añadir un nuevo usuario</a>                         
 </div>            
+
+

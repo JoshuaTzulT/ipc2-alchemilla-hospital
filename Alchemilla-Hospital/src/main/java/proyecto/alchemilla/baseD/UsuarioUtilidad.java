@@ -413,15 +413,15 @@ public class UsuarioUtilidad {
 
     public static List<Medico> buscarMedico(Connection con, String criterio) throws SQLException {
         String query = "SELECT id_medico, "
-                + " nombre, "
+                + "nombre, "
                 + "numero_colegiado, "
-                + " dpi,"
+                + "dpi,"
                 + "especialidad, "
                 + "email, "
                 + "horario_atencion_inicio, "
                 + "horario_atencion_final, "
                 + "fecha_inicio "
-                + "FROM medico WHERE nombre LIKE  ? OR especialidad LIKE  ? "
+                + "FROM medico WHERE nombre LIKE  ? OR especialidad LIKE ? "
                 + "OR horario_atencion_inicio LIKE ? "
                 + "OR horario_atencion_final LIKE ? ";
 
@@ -453,5 +453,47 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
+    
+    public static List<Cita> buscarCitaPorCriterio(Connection con, String criterioUno, String criterioDos, String criterioTres, String criterioCuatro) 
+            throws SQLException {
+        System.out.println(criterioUno);
+        System.out.println(criterioDos);
+        System.out.println(criterioTres);
+        System.out.println(criterioCuatro);
+        String query = "SELECT codigo_cita, "
+                + "id_paciente, "
+                + "id_medico, "
+                + "tipo_de_consulta, "
+                + "fecha, "
+                + "hora "          
+                + "FROM cita "
+                + "WHERE hora BETWEEN ? AND ? "
+                + "OR fecha BETWEEN ? AND ? ";
 
+        PreparedStatement ps = con.prepareStatement(query);
+        System.out.println(query);
+        int i = 1;
+        ps.setString(i++, criterioUno);
+        ps.setString(i++, criterioDos);
+        ps.setString(i++, criterioTres);
+        ps.setString(i++, criterioCuatro );
+        
+        ResultSet rs = ps.executeQuery();
+        List<Cita> lista = new ArrayList<>();
+        while (rs.next()) {
+            Cita cita = new Cita();
+            cita.setCodigoCita(rs.getInt("codigo_cita"));
+            cita.setIdPaciente(rs.getInt("id_paciente"));
+            cita.setIdMedico(rs.getString("id_medico"));
+            cita.setTipoDeConsulta(rs.getString("tipo_de_consulta"));
+            cita.setFecha(rs.getString("fecha"));
+            cita.setHora(rs.getString("hora"));
+            lista.add(cita);
+        }
+        return lista;
+    }
+
+    
+    
+   
 }

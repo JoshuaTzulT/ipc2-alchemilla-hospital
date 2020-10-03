@@ -5,8 +5,3 @@
 	<div style="position: fixed; right: 10px; top: 10px;color: white;">Bienvenido <%=((Usuario)session.getAttribute("USUARIO_ACTUAL")).getNombreDeUsuario()%></div>
         <div style="position: fixed; right: 10px; top: 30px; color: white;"><a href="<%=request.getContextPath()%>/logout">Salir</a></div>
 </div>
-
-
-
-
-<%--<%=request.getContextPath()%>--%>

@@ -13,7 +13,7 @@
                                                 </div>-->
                         <ul>
                             <li class="active"><a href="#">Inicio</a></li>
-                            <li><a href="#">Nuestros Servicios</a></li>
+                            <li><a href="<%=request.getContextPath()%>/MenuGestor?accion=nuestros_servicios">Nuestros Servicios</a></li>
                             <li><a href="#">Sobre Nosotros</a></li>
                             <li><a href="#">Galería</a></li>
                             <li><a href="Inicio?accion=sesion">Iniciar Sesión</a></li>

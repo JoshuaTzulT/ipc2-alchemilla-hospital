@@ -23,11 +23,6 @@ public class Inicio extends HttpServlet {
            request.getRequestDispatcher("/login.jsp").forward(request, response);
        }
         
-        
-//        if (request.getParameter("sesion")) {           
-//            request.getRequestDispatcher("/login.jsp").forward(request, response);
-//
-//        }
     }
 
     

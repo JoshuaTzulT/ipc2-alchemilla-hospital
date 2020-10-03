@@ -34,6 +34,8 @@ public class MedicoGestor extends ServletComun {//7
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
 
+
+            
             if (almacenaje != null) {
                 System.out.println(almacenaje);
                 conn = Conexion.getConnection();

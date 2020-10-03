@@ -23,7 +23,6 @@ public class Login extends HttpServlet {
         String usuario = request.getParameter("nombre_de_usuario");
         String password = request.getParameter("password");
 
-//5        password = CryptoUtil.encode(password);
         try {
             Connection conn = Conexion.getConnection();
             Usuario usu = UsuarioUtilidad.login(conn, usuario, password);
@@ -32,9 +31,6 @@ public class Login extends HttpServlet {
                 request.getSession().setAttribute("USUARIO_ACTUAL", usu);
                 conn.close();
                 request.setAttribute("PRINCIPAL", "activo");
-//4                request.getRequestDispatcher("/WEB-INF/view/home/index.jsp").forward(request, response);
-//request.setAttribute("PRINCIPAL", "activo");
-//              request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
 
             } else {

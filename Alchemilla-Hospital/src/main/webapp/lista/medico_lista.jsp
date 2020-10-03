@@ -2,8 +2,30 @@
 <%@page import="proyecto.alchemilla.entidades.Medico"%>
 <%@page import="proyecto.alchemilla.entidades.Usuario"%>
 <%@page import="java.util.List"%>
+
 <div id="principal" >
-    <table style="margin-top: 125px;margin-left: 60px;" border="1">
+
+    <form action="/Alchemilla-Hospital/MedicoGestor" method="POST">
+
+        <div>
+            <div>
+                <b>Buscar por un Criterio</b>
+            </div>
+            <div>
+                <input type="text" placeholder="Nombre de usuario" name="nombre_de_usuario" required="">                        
+            </div>
+        </div>
+
+        <div>
+            <div> 
+                <button type="submit" style="margin-left: 215px;margin-top: -65px;">Buscar</button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <table style="margin-top: 60px;margin-left: 60px;" border="1">
         <thead>
             <tr>
                 <th>#</th>
@@ -45,31 +67,9 @@
         </tbody>
     </table>
 
-    <a href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">Añadir un nuevo usuario</a>                         
+    <a href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">Añadir un nuevo usuario</a>      
+
 </div>            
 
-<div class="logeo" style="margin-left: 425px;margin-top: 100px;">
-    <form action="<%=request.getContextPath()%>/MedicoGestor" method="POST">
-    <div class="container">
-        <div class="row">
-            <div class="col" style="width: 100px;">
-                <b>Usuario</b>
-            </div>
-            <div class="col">
-                <input type="text" placeholder="Nombre de usuario" name="nombre_de_usuario" required="">						
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <p class="login_error">
-                </p>   
-                <button type="submit">Ingresar</button>
-            </div>
-        </div>
-    </div>		
-</form>		
-</div>
 
 

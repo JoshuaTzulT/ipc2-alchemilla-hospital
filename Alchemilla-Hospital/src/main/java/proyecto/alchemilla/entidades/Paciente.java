@@ -4,6 +4,7 @@ package proyecto.alchemilla.entidades;
 
 public class Paciente {
     
+    private int idPaciente;
     private String nombre;
     private String sexo;
     private String fechaNacimiento;
@@ -84,6 +85,14 @@ public class Paciente {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
     
 }

@@ -28,12 +28,13 @@
                         </p>
                         <button type="submit">Ingresar</button>
                     </div>
-
-                    <div>
-                        <a href="<%=request.getContextPath()%>/MedicoGestor?accion=nuevo">No tiene una cuenta? Registresé acá</a>
-                    </div>
                 </div>
             </div>
         </form>
+                        
+                        <form action ="<%=request.getContextPath()%>/UsuarioGestion?accion=registrar" method="POST">
+                        <a href="<%=request.getContextPath()%>/UsuarioGestion?accion=registrar">No tiene una cuenta? Registresé acá</a>
+                    </form>
+                        
     </div>
 </body>

@@ -15,8 +15,8 @@ import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.servlets.ServletComun;
 
-@WebServlet(name = "CitaMedicaGestor", urlPatterns = {"/CitaMedicaGestor"})
-public class CitaMedicaGestor extends ServletComun {//7
+@WebServlet(name = "CitaLaboratorioGestor", urlPatterns = {"/CitaLaboratorioGestor"})
+public class CitaLaboratorioGestor extends ServletComun {//7
 
     Cita cm = new Cita();
 

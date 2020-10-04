@@ -1,6 +1,7 @@
 //2
 package proyecto.alchemilla.entidades;
 public class Cita {
+    private String nombreDelPaciente;
     private String nombreDelMedico;
     private int codigoCita;
     private int idPaciente;  
@@ -75,6 +76,14 @@ public class Cita {
 
     public void setNombreDelMedico(String nombreDelMedico) {
         this.nombreDelMedico = nombreDelMedico;
+    }
+
+    public String getNombreDelPaciente() {
+        return nombreDelPaciente;
+    }
+
+    public void setNombreDelPaciente(String nombreDelPaciente) {
+        this.nombreDelPaciente = nombreDelPaciente;
     }
     
     

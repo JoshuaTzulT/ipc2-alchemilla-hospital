@@ -7,20 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static jdk.nashorn.internal.runtime.Debug.id;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Consulta;
 import proyecto.alchemilla.entidades.Examen;
 import proyecto.alchemilla.entidades.Laboratorista;
 import proyecto.alchemilla.entidades.Medico;
+import proyecto.alchemilla.entidades.Paciente;
 import proyecto.alchemilla.entidades.Usuario;
 
 public class UsuarioUtilidad {
 
+//    private static Paciente pct = new Paciente();
     public static Usuario login(Connection con, String usuario, String password) throws SQLException {
         String sql = "SELECT nombre, "
                 + "passw "
-                + "FROM usuario WHERE nombre = ? and passw = ?";
+                + "FROM usuario WHERE email = ? and passw = ?";
 
         PreparedStatement ps = con.prepareStatement(sql);
         int i = 1;
@@ -68,6 +71,48 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
+
+    public static List<Cita> getMiListaCita(Connection con, String email) throws SQLException {
+        System.out.println("HOLA EL EMAIL ES :" + email);
+        String primerQuery = "SELECT id_paciente FROM paciente WHERE email = ? ";
+        PreparedStatement psP = con.prepareStatement(primerQuery);
+        psP.setString(1, email);
+        ResultSet rsP = psP.executeQuery();
+        int id =0;
+        if (rsP.next()) {
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getString("id_paciente")); 
+            id = rsP.getInt("id_paciente");
+        }
+    
+        String query = "SELECT paciente.nombre, "
+                + "cita.tipo_de_consulta, "
+                + "cita.fecha, "
+                + "cita.hora "
+                + "FROM paciente JOIN cita ON cita.id_paciente = paciente.id_paciente "
+                + "WHERE paciente.id_paciente =  ? ";
+
+        System.out.println(query);
+        PreparedStatement ps = con.prepareStatement(query);
+        int i = 1;
+        ps.setInt(i++, id);
+        System.out.println(ps);
+        ResultSet rs = ps.executeQuery();
+        System.out.println(rs);
+        List<Cita> lista = new ArrayList<>();
+        while (rs.next()) {
+            Cita cm = new Cita();
+            cm.setNombreDelPaciente(rs.getString("paciente.nombre"));
+            cm.setTipoDeConsulta(rs.getString("cita.tipo_de_consulta"));
+            cm.setFecha(rs.getString("cita.fecha"));
+            cm.setHora(rs.getString("cita.hora"));
+            lista.add(cm);
+        }
+        return lista;
+    }
+    
 
     public static List<Cita> getListaCita(Connection con) throws SQLException {
         String query = "SELECT codigo_cita, "
@@ -249,8 +294,8 @@ public class UsuarioUtilidad {
         }
 
     }
-    
-    public static boolean usuarioExiste(Connection conn, String email) throws SQLException{
+
+    public static boolean usuarioExiste(Connection conn, String email) throws SQLException {
         String sql = "SELECT email "
                 + "FROM usuario "
                 + "WHERE email = ?";
@@ -267,8 +312,6 @@ public class UsuarioUtilidad {
             return false;
         }
     }
-    
-    
 
     public static boolean consultaExiste(Connection conn, String nombreConsulta) throws SQLException {
         String sql = "SELECT tipo_de_consulta "
@@ -344,14 +387,14 @@ public class UsuarioUtilidad {
         ps.executeUpdate();
         System.out.println("EJECUTADO");
     }
-    
-    public static void insertarUsuario(Connection conn, Usuario usu) throws SQLException{
-        String sql ="INSERT INTO usuario (nombre, "
+
+    public static void insertarUsuario(Connection conn, Usuario usu) throws SQLException {
+        String sql = "INSERT INTO usuario (nombre, "
                 + "alias, "
                 + "passw, "
                 + "email) "
                 + "VALUES(?, ?, ?, ?)";
-        
+
         PreparedStatement ps = conn.prepareStatement(sql);
         int i = 1;
         ps.setString(i++, usu.getNombreDeUsuario());

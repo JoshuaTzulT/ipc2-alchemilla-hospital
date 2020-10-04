@@ -7,7 +7,9 @@
     <a href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">Nuestros Médicos</a>
     <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=comprobar">Disponibilidad de horarios</a>
     <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una cita médica</a>
-    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">Ver mis citas médicas</a>
+    <a href="<%=request.getContextPath()%>/">Agendar examen en el laboratorio</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=miCita">Ver todas mis citas médicas</a>
+    <a href="<%=request.getContextPath()%>/">Ver todas mis cita en el laboratorio</a>
     <a href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">Mi historial médico</a>
 </div>
 

@@ -16,7 +16,7 @@ import proyecto.alchemilla.servlets.ServletComun;
 
 @WebServlet(name = "UsuarioGestion", urlPatterns = {"/UsuarioGestion"})
 public class UsuarioGestion extends ServletComun {//7
-
+    Usuario usua = new Usuario();
     String accion;
     String titulo;
     String link;
@@ -45,10 +45,14 @@ public class UsuarioGestion extends ServletComun {//7
         try {
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
-            switch (accion) {
+            switch (accion) {              
+                 case "nuevo":
+                    titulo = "";
+                    link = "/nuevo/usuario_nuevo.jsp";
+                    break;
                 case "registar":
                     System.out.println("JESUS SUPER STAR");
-                    Usuario usua = new Usuario();
+                    
                         usua.setNombreDeUsuario(accionDos);
                         usua.setAlias(accionTres);
                         usua.setEmail(accionCuatro);
@@ -61,13 +65,16 @@ public class UsuarioGestion extends ServletComun {//7
                     }else {
                         request.setAttribute("error", "No se pudo registra. Ya hay un usuario que pertenece a este E-mail");
                     }
+                      titulo = "";
+                    link = "/nuevo/usuario_nuevo.jsp";
+                    break;
             }
 
             conn.close();
 
             request.setAttribute("MENSAJE", mensaje);
             request.setAttribute("TITULO", titulo);
-          //  request.getRequestDispatcher(link).forward(request, response);
+           request.getRequestDispatcher(link).forward(request, response);
         } catch (ClassNotFoundException | SQLException e) {
               request.setAttribute("error", "Verifique que este ingresando datos válidos");  
         }

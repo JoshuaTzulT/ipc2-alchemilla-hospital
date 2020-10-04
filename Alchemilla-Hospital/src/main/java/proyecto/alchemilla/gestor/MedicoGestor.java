@@ -9,17 +9,19 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
-import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
+import proyecto.alchemilla.sesion.Login;
 
 @WebServlet(name = "MedicoGestor", urlPatterns = {"/MedicoGestor"})
 public class MedicoGestor extends ServletComun {//7
-
+   
     private String almacenaje;
-
+    private String alamacenajeDos;
+    private HttpSession hs ;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -33,9 +35,6 @@ public class MedicoGestor extends ServletComun {//7
         try {
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
-
-
-            
             if (almacenaje != null) {
                 System.out.println(almacenaje);
                 conn = Conexion.getConnection();
@@ -52,6 +51,9 @@ public class MedicoGestor extends ServletComun {//7
             }
 
             else if (accion.equals("lista")) {
+//                   hs = request.getSession();
+//                  System.out.println(getHs().getAttribute("PUENTE"));
+
                 List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
                 mensaje = "no hay informacion";
                 if (lista.size() > 0) {
@@ -105,4 +107,13 @@ public class MedicoGestor extends ServletComun {//7
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
+
+    public String getAlamacenajeDos() {
+        return alamacenajeDos;
+    }
+
+    public void setAlamacenajeDos(String alamacenajeDos) {
+        this.alamacenajeDos = alamacenajeDos;
+    }
+   
 }

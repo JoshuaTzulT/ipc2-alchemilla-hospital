@@ -1,15 +1,14 @@
 
 <jsp:include page="../principal/pieDePagina.jsp"></jsp:include>
 
-
 <link rel="stylesheet" href="CSS/estilo.css"/>
 <div id="nav" class="vmenu">
-    <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/MenuGestor?accion=principal">Página Principal</a>  
-    <a class="menu_link" href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">Nuestros Médicos</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=comprobar">Disponibilidad de horarios</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una cita médica</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">Ver mis citas médicas</a>
-    <a class="menu_link" href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">Mi historial médico</a>
+    <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/MenuGestor?accion=principal">Inicio</a>  
+    <a href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">Nuestros Médicos</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=comprobar">Disponibilidad de horarios</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una cita médica</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=lista">Ver mis citas médicas</a>
+    <a href="<%=request.getContextPath()%>/usuario/area_de_busqueda.jsp">Mi historial médico</a>
 </div>
 
 <script>

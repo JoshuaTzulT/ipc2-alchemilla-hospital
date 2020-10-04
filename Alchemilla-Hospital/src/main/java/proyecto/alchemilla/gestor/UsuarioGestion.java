@@ -1,101 +1,80 @@
-////6
-//package proyecto.alchemilla.gestor;
-//
-//import java.io.IOException;
-//import java.sql.Connection;
-//import java.sql.SQLException;
-//import java.util.List;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import proyecto.alchemilla.baseD.Conexion;
-//import proyecto.alchemilla.baseD.UsuarioUtilidad;
-//import proyecto.alchemilla.entidades.Usuario;
-//import proyecto.alchemilla.servlets.ServletComun;
-//
-//@WebServlet(name = "UsuarioGestion", urlPatterns = {"/UsuarioGestion"})
-//public class UsuarioGestion extends ServletComun {//7
-//
-////    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-////            throws ServletException, IOException {
-////
-////        validar(request, response);//7
-////        String accion = request.getParameter("accion");
-////        try {
-////            Connection conn = Conexion.getConnection();
-////            if (accion.equals("lista")) {
-////                List<Usuario> lista = UsuarioUtilidad.getListaUsuario(conn);
-////                String mensaje = "no hay informacion";
-////                if (lista.size() > 0) {
-////                    mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
-////                }
-////                request.setAttribute("MENSAJE", mensaje);
-////                request.setAttribute("TITULO", "Listado");
-////                request.setAttribute("lista", lista);
-////                request.setAttribute("UG", "activo");
-////                request.getRequestDispatcher("/usuario/usuario.jsp").forward(request, response);
-////            }
-////        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-////            request.setAttribute("Error", e.getMessage());
-////            request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
-////        }
-////
-////    }
-////    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        validar(request, response);
-//        String accion = request.getParameter("accion");
-//        String titulo = "";
-//        String link = "";
-//        String mensaje = "";
-//        try {
-//            Connection conn = Conexion.getConnection();
-//            request.setAttribute("UG", "activo");
-//                List<Usuario> lista = UsuarioUtilidad.getListaUsuario(conn);
-//                mensaje = "no hay informacion";
-//                if (lista.size() > 0) {
-//                    mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
-//                }
-//                titulo = "LISTADO";
-//
-//                request.setAttribute("lista", lista);
-//                link = "/usuario/usuario.jsp";
-//
-//            } else if (accion.equals("nuevo")) {
-//                titulo = "Agregar Nuevo Usuario";
-//                link = "/usuario/usuario_nuevo.jsp";
-//            } else if (accion.equals("insert")) {
-//                Usuario usu = new Usuario();
-//                usu.setNombreDeUsuario(request.getParameter("nombreDeUsuario"));
-//                usu.setPassword(request.getParameter("password"));
-////                    u.setPassword(CryptoUtil.encode(request.getParameter("password")));
-//                usu.setEmail(request.getParameter("email"));
-//
-//                if (!UsuarioUtilidad.citaExiste(conn, usu.getNombreDeUsuario())) {
-////                    UsuarioUtilidad.insertarCita(conn, usu);
-//                    mensaje = "REGISTRO GUARDADO!";
-//                } else {
-//                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + usu.getNombreDeUsuario() + "'");
-//                }
-//                titulo = "AÑADIR REGISTROS";
-//                link = "/usuario/usuario_nuevo.jsp";
-//            }
-//            conn.close();
-//
-//            request.setAttribute("MENSAJE", mensaje);
-//            request.setAttribute("TITULO", titulo);
-//            request.getRequestDispatcher(link).forward(request, response);
-//        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-//            request.setAttribute("Error", e.getMessage());
-//            request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
-//        }
-//
-//    }
-//
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        doGet(req, resp);
-//    }
-//}
+//6
+package proyecto.alchemilla.gestor;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import proyecto.alchemilla.baseD.Conexion;
+import proyecto.alchemilla.baseD.UsuarioUtilidad;
+import proyecto.alchemilla.entidades.Usuario;
+import proyecto.alchemilla.servlets.ServletComun;
+
+@WebServlet(name = "UsuarioGestion", urlPatterns = {"/UsuarioGestion"})
+public class UsuarioGestion extends ServletComun {//7
+
+    String accion;
+    String titulo;
+    String link;
+    String mensaje;
+
+    private String accionDos;
+    private String accionTres;
+    private String accionCuatro;
+    private String accionCinco;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        validar(request, response);
+        accion = request.getParameter("accion");
+        accionDos = request.getParameter("nombreDeUsuario");
+        accionTres = request.getParameter("alias");
+        accionCuatro = request.getParameter("email");
+        accionCinco = request.getParameter("password");
+
+        titulo = "";
+        link = "";
+        mensaje = "";
+
+        try {
+            Connection conn = Conexion.getConnection();
+            request.setAttribute("UG", "activo");
+            switch (accion) {
+                case "registar":
+                    System.out.println("JESUS SUPER STAR");
+                    Usuario usua = new Usuario();
+                        usua.setNombreDeUsuario(accionDos);
+                        usua.setAlias(accionTres);
+                        usua.setEmail(accionCuatro);
+                        usua.setPassword(accionCinco);
+                    if (UsuarioUtilidad.usuarioExiste(conn, usua.getEmail()) == false) {
+                        System.out.println("HEMOS ARRIBADO");
+                        UsuarioUtilidad.insertarUsuario(conn, usua);
+                        System.out.println("CITA RAPID");
+                        mensaje = "Usuario REGISTRADO!";
+                    }else {
+                        request.setAttribute("error", "No se pudo registra. Ya hay un usuario que pertenece a este E-mail");
+                    }
+            }
+
+            conn.close();
+
+            request.setAttribute("MENSAJE", mensaje);
+            request.setAttribute("TITULO", titulo);
+          //  request.getRequestDispatcher(link).forward(request, response);
+        } catch (ClassNotFoundException | SQLException e) {
+              request.setAttribute("error", "Verifique que este ingresando datos válidos");  
+        }
+
+    }
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+}

@@ -2,8 +2,8 @@
 <%@page import="proyecto.alchemilla.entidades.Medico"%>
 <%@page import="proyecto.alchemilla.entidades.Usuario"%>
 <%@page import="java.util.List"%>
-
-<div id="principal" >
+<link rel="stylesheet" href="CSS/estilo.css">
+<div id="principal">
 
     <form action="/Alchemilla-Hospital/MedicoGestor" method="POST">
 
@@ -25,7 +25,7 @@
     </form>
 
 
-    <table style="margin-top: 60px;margin-left: 60px;" border="1">
+    <table class="oscuridad" style="margin-top: 60px;margin-left: 60px;" border="1">
         <thead>
             <tr>
                 <th>#</th>

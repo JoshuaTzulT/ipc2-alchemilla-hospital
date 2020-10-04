@@ -1,7 +1,7 @@
 
 <%@page import="proyecto.alchemilla.entidades.Usuario"%>
 <%@page import="java.util.List"%>
-<div id="principal" >
+<div>
 <table border="1">
     <thead>
         <tr>

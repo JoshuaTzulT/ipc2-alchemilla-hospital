@@ -4,6 +4,7 @@ package proyecto.alchemilla.entidades;
 public class Usuario {
     
     private String nombreDeUsuario;
+    private String alias;
     private String password;
     private String email;
 
@@ -30,6 +31,14 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
      
 }

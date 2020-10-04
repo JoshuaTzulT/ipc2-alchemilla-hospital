@@ -2,7 +2,7 @@
 <%@page import="proyecto.alchemilla.entidades.Cita"%>
 
 <%@page import="java.util.List"%>
-<div id="principal" >
+<div>
     
 <!--    <form action="/Alchemilla-Hospital/CitaMedicaGestor" method="POST">
 

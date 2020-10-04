@@ -1,5 +1,5 @@
 <div id="principal">
-    <form action="<%=request.getContextPath()%>/UsuarioGestion?accion=insert" method="POST">
+    <form action="<%=request.getContextPath()%>/UsuarioGestion?accion=registar" method="POST">
         <table border="1">
 
             <tbody>

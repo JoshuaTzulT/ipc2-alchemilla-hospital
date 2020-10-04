@@ -96,20 +96,20 @@ public class UsuarioUtilidad {
     public static List<Cita> getListaCitaExistente(Connection con, String nombre, String fecha, String hora) throws SQLException {
         System.out.println("SHUB NIGGURATH");
         String query = "SELECT medico.nombre, "
-                         + "cita.id_medico, "
-                         + "cita.fecha, "
-                         + "cita.hora "  
-                      +"FROM medico JOIN cita ON cita.id_medico = medico.id_medico "
-                      +"WHERE medico.id_medico =  ? " 
-                      +"AND  cita.fecha =  ? "
-                      +" AND  cita.hora = ? ";
-        System.out.println(query);      
+                + "cita.id_medico, "
+                + "cita.fecha, "
+                + "cita.hora "
+                + "FROM medico JOIN cita ON cita.id_medico = medico.id_medico "
+                + "WHERE medico.id_medico =  ? "
+                + "AND  cita.fecha =  ? "
+                + " AND  cita.hora = ? ";
+        System.out.println(query);
         PreparedStatement ps = con.prepareStatement(query);
         int i = 1;
-        ps.setString(i++,nombre);
-        ps.setString(i++,fecha);
+        ps.setString(i++, nombre);
+        ps.setString(i++, fecha);
         ps.setString(i++, hora);
-       
+
         System.out.println(ps);
         ResultSet rs = ps.executeQuery();
         System.out.println(rs);
@@ -123,7 +123,7 @@ public class UsuarioUtilidad {
             cm.setHora(rs.getString("cita.hora"));
             lista.add(cm);
         }
-           System.out.println("YOG SOTHOT");
+        System.out.println("YOG SOTHOT");
         return lista;
     }
 
@@ -215,14 +215,23 @@ public class UsuarioUtilidad {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static boolean verificarEntero(String idPaciente) {
+        try {
+            int i = Integer.parseInt(idPaciente);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
     public static boolean citaExiste(Connection conn, String idMed, String fecha, String horario) throws SQLException {
-    
-        String sql = "SELECT medico.nombre, cita.id_medico, cita.fecha, cita.hora "  
-                      +"FROM medico JOIN cita ON cita.id_medico = medico.id_medico "
-                      +"WHERE medico.id_medico =  ? " 
-                      +"AND  cita.fecha =  ? "
-                      +" AND  cita.hora = ? ";
-        
+
+        String sql = "SELECT medico.nombre, cita.id_medico, cita.fecha, cita.hora "
+                + "FROM medico JOIN cita ON cita.id_medico = medico.id_medico "
+                + "WHERE medico.id_medico =  ? "
+                + "AND  cita.fecha =  ? "
+                + " AND  cita.hora = ? ";
+
         System.out.println("HEEMOS LLEGADO ACA");
         System.out.println(sql);
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -233,17 +242,34 @@ public class UsuarioUtilidad {
         if (rs.next()) {
             System.out.println(" hay algo");
             return true;
-            
-        }else{
-        System.out.println("NO HAY NADA");
-        return false;
-        }
-       
-    }
 
+        } else {
+            System.out.println("NO HAY NADA");
+            return false;
+        }
+
+    }
+    
+    public static boolean usuarioExiste(Connection conn, String email) throws SQLException{
+        String sql = "SELECT email "
+                + "FROM usuario "
+                + "WHERE email = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        System.out.println(sql);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            System.out.println(" hay algo");
+            return true;
+
+        } else {
+            System.out.println("NO HAY NADA");
+            return false;
+        }
+    }
     
     
-    
+
     public static boolean consultaExiste(Connection conn, String nombreConsulta) throws SQLException {
         String sql = "SELECT tipo_de_consulta "
                 + "FROM consulta WHERE tipo_de_consulta = ?";
@@ -317,6 +343,22 @@ public class UsuarioUtilidad {
         ps.setString(i++, cm.getHora());
         ps.executeUpdate();
         System.out.println("EJECUTADO");
+    }
+    
+    public static void insertarUsuario(Connection conn, Usuario usu) throws SQLException{
+        String sql ="INSERT INTO usuario (nombre, "
+                + "alias, "
+                + "passw, "
+                + "email) "
+                + "VALUES(?, ?, ?, ?)";
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, usu.getNombreDeUsuario());
+        ps.setString(i++, usu.getAlias());
+        ps.setString(i++, usu.getPassword());
+        ps.setString(i++, usu.getEmail());
+        ps.executeUpdate();
     }
 
     public static void insertarExamen(Connection conn, Examen examen) throws SQLException {

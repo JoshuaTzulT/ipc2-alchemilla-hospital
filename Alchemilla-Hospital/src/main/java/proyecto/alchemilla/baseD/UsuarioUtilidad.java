@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import static jdk.nashorn.internal.runtime.Debug.id;
 import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Cita;
 import proyecto.alchemilla.entidades.Consulta;
@@ -19,11 +18,150 @@ import proyecto.alchemilla.entidades.Usuario;
 
 public class UsuarioUtilidad {
 
-//    private static Paciente pct = new Paciente();
-    public static Usuario login(Connection con, String usuario, String password) throws SQLException {
+    public static void main(String args[]) throws SQLException, ClassNotFoundException {
+        Connection con = Conexion.getConnection();
+        revisarUsuario(con, "6tht", "DFASDFADS");
+    }
+
+    public static String revisarUsuario(Connection con, String usuario, String password) throws SQLException {
+        int j = 1;
+        switch (j) {
+            case 1: {
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM usuario WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                int i = 1;
+                ps.setString(i++, usuario);
+                ps.setString(i++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return "usuario";
+                } else {
+                    j = 2;
+                }
+            }
+            
+            case 2: {
+                String sql = "SELECT nombre, "
+                        + "pass "
+                        + "FROM medico WHERE email = ? and pass = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                int i = 1;
+                ps.setString(i++, usuario);
+                ps.setString(i++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return "medico";
+                } else {
+                    j = 3;
+                }
+            }
+            case 3: {
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM laboratorista WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                int i = 1;
+                ps.setString(i++, usuario);
+                ps.setString(i++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return "laboratorista";
+                } else {
+                    j = 4;
+                }
+            }
+            case 4: {
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM administrador WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                int i = 1;
+                ps.setString(i++, usuario);
+                ps.setString(i++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return "administrador";
+                } else {
+                    j = 5;
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        System.out.println("SI NO HAY NADA");
+        return "nada";
+    }
+
+    public static Usuario revisarLoginUsuario(Connection con, String usuario, String password) throws SQLException {
         String sql = "SELECT nombre, "
                 + "passw "
                 + "FROM usuario WHERE email = ? and passw = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, usuario);
+        ps.setString(i++, password);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Usuario u = new Usuario();
+            u.setNombreDeUsuario(rs.getString("nombre"));
+            u.setEmail("alias");
+
+            return u;
+        }
+        return null;
+    }
+
+    public static Usuario revisarLoginMedico(Connection con, String usuario, String password) throws SQLException {
+        String sql = "SELECT nombre, "
+                + "pass "
+                + "FROM medico WHERE email = ? and pass = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, usuario);
+        ps.setString(i++, password);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Usuario u = new Usuario();
+            u.setNombreDeUsuario(rs.getString("nombre"));
+            u.setEmail("alias");
+
+            return u;
+        }
+        return null;
+    }
+
+    public static Usuario revisarLoginLaboratorista(Connection con, String usuario, String password) throws SQLException {
+        String sql = "SELECT nombre, "
+                + "passw "
+                + "FROM laboratorista WHERE email = ? and passw = ?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        int i = 1;
+        ps.setString(i++, usuario);
+        ps.setString(i++, password);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Usuario u = new Usuario();
+            u.setNombreDeUsuario(rs.getString("nombre"));
+            u.setEmail("alias");
+
+            return u;
+        }
+        return null;
+    }
+
+    public static Usuario revisarLoginAdmin(Connection con, String usuario, String password) throws SQLException {
+        String sql = "SELECT nombre, "
+                + "passw "
+                + "FROM administrador WHERE email = ? and passw = ?";
 
         PreparedStatement ps = con.prepareStatement(sql);
         int i = 1;
@@ -72,32 +210,37 @@ public class UsuarioUtilidad {
         return lista;
     }
 
-    public static List<Cita> getMiListaCita(Connection con, String email) throws SQLException {
+    public static List<Cita> getMiListaCita(Connection con, String email, String idMedico, String fecha, String hora) throws SQLException {
         System.out.println("HOLA EL EMAIL ES :" + email);
         String primerQuery = "SELECT id_paciente FROM paciente WHERE email = ? ";
         PreparedStatement psP = con.prepareStatement(primerQuery);
         psP.setString(1, email);
         ResultSet rsP = psP.executeQuery();
-        int id =0;
+        String id = "";
         if (rsP.next()) {
             Paciente paciente = new Paciente();
             paciente.setIdPaciente(rsP.getInt("id_paciente"));
             System.out.println(rsP.getInt("id_paciente"));
-            System.out.println(rsP.getString("id_paciente")); 
-            id = rsP.getInt("id_paciente");
+            System.out.println(rsP.getString("id_paciente"));
+            id = rsP.getString("id_paciente");
         }
-    
+
         String query = "SELECT paciente.nombre, "
                 + "cita.tipo_de_consulta, "
                 + "cita.fecha, "
                 + "cita.hora "
                 + "FROM paciente JOIN cita ON cita.id_paciente = paciente.id_paciente "
-                + "WHERE paciente.id_paciente =  ? ";
+                + "WHERE cita.id_medico =  ? "
+                + "AND  cita.fecha = ? "
+                + "AND cita.hora = ? ";
 
         System.out.println(query);
         PreparedStatement ps = con.prepareStatement(query);
         int i = 1;
-        ps.setInt(i++, id);
+        ps.setString(i++, id);
+//        ps.setString(i++, idMedico);
+        ps.setString(i++, fecha);
+        ps.setString(i++, hora);
         System.out.println(ps);
         ResultSet rs = ps.executeQuery();
         System.out.println(rs);
@@ -112,7 +255,6 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
-    
 
     public static List<Cita> getListaCita(Connection con) throws SQLException {
         String query = "SELECT codigo_cita, "

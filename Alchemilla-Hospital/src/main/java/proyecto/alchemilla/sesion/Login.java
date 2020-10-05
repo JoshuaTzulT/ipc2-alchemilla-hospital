@@ -18,7 +18,6 @@ import proyecto.alchemilla.gestor.MedicoGestor;
 
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
-
     private HttpSession emailPuente;
     private String almacenajeCorreo;
     CitaMedicaGestor cmg = new CitaMedicaGestor();
@@ -29,20 +28,40 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        usuario = request.getParameter("nombre_de_usuario");
+        usuario = request.getParameter("email");
         password = request.getParameter("password");
 
         try {
             Connection conn = Conexion.getConnection();
-            Usuario usu = UsuarioUtilidad.login(conn, usuario, password);
+            Usuario usu = UsuarioUtilidad.revisarLoginUsuario(conn, usuario, password);
 
-            if (usu != null) {
+            if (usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("usuario")) {
                 request.getSession().setAttribute("USUARIO_ACTUAL", usu);
                 conn.close();
                 request.setAttribute("PRINCIPAL", "activo");
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+               // doGet(request, response);
 
-            } else {
+            } else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("medico")){
+                request.getSession().setAttribute("MEDICO_ACTUAL", usu);
+                conn.close();
+                request.setAttribute("PRINCIPAL", "activo");
+                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+                
+            }else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("laboratorista")){
+                request.getSession().setAttribute("LABORATORISTA_ACTUAL", usu);
+                conn.close();
+                request.setAttribute("PRINCIPAL", "activo");
+                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+                
+                
+            }else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("administrador")){
+                request.getSession().setAttribute("ADMIN_ACTUAL", usu);
+                conn.close();
+                request.setAttribute("PRINCIPAL", "activo");
+                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+                
+            }else {
                 request.setAttribute("error", "USUARIO INCORRECTO O CONTRASEÑA INCORRECTA");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
@@ -51,17 +70,19 @@ public class Login extends HttpServlet {
             request.setAttribute("error", "ERROR DEL SISTEMA:" + e.getMessage());
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
+        
         doGet(request, response);
-
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        usuario = request.getParameter("nombre_de_usuario");
+
         emailPuente = request.getSession();
         emailPuente.setAttribute("PUENTE", usuario);
+        emailPuente.getAttribute("PUENTE");
         cmg.setHs(emailPuente);
+
 
     }
 

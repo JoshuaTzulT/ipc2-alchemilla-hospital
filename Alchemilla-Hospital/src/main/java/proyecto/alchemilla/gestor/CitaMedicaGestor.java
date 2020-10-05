@@ -25,6 +25,7 @@ public class CitaMedicaGestor extends ServletComun {//7
     private String titulo;
     private String link;
     private String mensaje;
+    private String email;
 
     private String accionDos;
     private String accionTres;
@@ -55,10 +56,20 @@ public class CitaMedicaGestor extends ServletComun {//7
             request.setAttribute("UG", "activo");
 
             switch (accion) {
-                case "miCita":
-                    hs = request.getSession();
-                    String email = getHs().getAttribute("PUENTE").toString();
-                    List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, email);
+                case "mibusqueda":
+                    try {
+                   request.getRequestDispatcher("/usuario/contenidoBusqueda.jsp").forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+                case "miCita": 
+
+                    try {
+                        hs = request.getSession();
+                          getHs().getAttribute("PUENTE");
+                          String email = getHs().getAttribute("PUENTE").toString();
+                    List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, email, accionDos, accionTres, accionCuatro);
                     mensaje = "no hay informacion";
                     if (miCita.size() > 0) {
                         mensaje = miCita.size() + (miCita.size() > 1 ? "registros" : "registro");
@@ -67,7 +78,13 @@ public class CitaMedicaGestor extends ServletComun {//7
                     request.setAttribute("lista", miCita);
                     link = "/usuario/miCita.jsp";
 
-                    break;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    request.getRequestDispatcher("/usuario/mibusqueda_cita.jsp").forward(request, response);
+                    request.setAttribute("error", "No Tiene cita para tal fecha/hora");
+                }
+
+                break;
 
                 case "comprobar":
                     request.getRequestDispatcher("/usuario/busqueda_cita.jsp").forward(request, response);

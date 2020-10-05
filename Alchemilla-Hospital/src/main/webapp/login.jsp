@@ -5,11 +5,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col" style="width: 100px;">
-                        <b>Usuario</b>
+                        <b>E-mail</b>
                     </div>
                     <div class="col">
-                        <input type="text" placeholder="Nombre de usuario"
-                               name ="nombre_de_usuario" required>
+                        <input type="text" placeholder="Ingrese su Email"
+                               name ="email" required>
                     </div>
                 </div>
                 <div class="row">

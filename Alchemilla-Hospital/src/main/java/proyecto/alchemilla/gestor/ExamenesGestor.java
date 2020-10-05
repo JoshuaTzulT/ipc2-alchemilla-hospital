@@ -18,51 +18,57 @@ import proyecto.alchemilla.servlets.ServletComun;
 @WebServlet(name = "ExamenesGestor", urlPatterns = {"/ExamenesGestor"})
 public class ExamenesGestor extends ServletComun {//7
 
+    private String accion;
+    private String titulo;
+    private String link;
+    private String mensaje;
+          
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         validar(request, response);
-        String accion = request.getParameter("accion");
-        String titulo = "";
-        String link = "";
-        String mensaje = "";
+         accion = request.getParameter("accion");
+         titulo = "";
+         link = "";
+         mensaje = "";
         try {
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
-            if (accion.equals("lista")) {
-                List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
-                mensaje = "no hay informacion";
-                if (lista.size() > 0) {
-                    mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
-                }
-                titulo = "LISTADO";
-
-                request.setAttribute("lista", lista);
-                link = "/usuario/medico.jsp";
-
-            } else if (accion.equals("nuevo")) {
-                titulo = "Agendar nueva CITA";
-                link = "/nuevo/examen_nuevo.jsp";
-            } else if (accion.equals("insert")) {
-
-                Examen ex = new Examen();
-                ex.setCodigoExamen(Integer.parseInt(request.getParameter("idDeExamen")));
-                ex.setNombreDelExamen(request.getParameter("nombreDeExamen"));
-                ex.setOrden(request.getParameter("orden"));
-                ex.setDescripcion(request.getParameter("descr"));
-                ex.setCosto(Float.parseFloat(request.getParameter("costoExamen")));
-                ex.setInforme(request.getParameter("informe"));
-
-                if (!UsuarioUtilidad.examenExiste(conn, ex.getNombreDelExamen())) {
-                    System.out.println(ex.getNombreDelExamen());
-                    UsuarioUtilidad.insertarExamen(conn, ex);
-                    mensaje = "REGISTRO GUARDADO!";
-                    System.out.println("GUARDADO");
-                } else {
-                    request.setAttribute("error", "REGISTRO DUPLICADO: '" + ex.getNombreDelExamen() + "'");
-                }
-                titulo = "Agendar nueva CITA";
-                link = "/nuevo/examen_nuevo.jsp";
+            switch (accion) {
+                case "lista":
+                    List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
+                    mensaje = "no hay informacion";
+                    if (lista.size() > 0) {
+                        mensaje = lista.size() + (lista.size() > 1 ? "registros" : "registro");
+                    }   titulo = "LISTADO";
+                    request.setAttribute("lista", lista);
+                    link = "/usuario/medico.jsp";
+                    break;
+                case "nuevo":
+                    titulo = "Agendar nueva CITA";
+                    link = "/nuevo/examen_nuevo.jsp";
+                    break;
+                case "insert":
+                    Examen ex = new Examen();
+                    ex.setCodigoExamen(Integer.parseInt(request.getParameter("idDeExamen")));
+                    ex.setNombreDelExamen(request.getParameter("nombreDeExamen"));
+                    ex.setOrden(request.getParameter("orden"));
+                    ex.setDescripcion(request.getParameter("descr"));
+                    ex.setCosto(Float.parseFloat(request.getParameter("costoExamen")));
+                    ex.setInforme(request.getParameter("informe"));
+                    if (!UsuarioUtilidad.examenExiste(conn, ex.getNombreDelExamen())) {
+                        System.out.println(ex.getNombreDelExamen());
+                        UsuarioUtilidad.insertarExamen(conn, ex);
+                        mensaje = "REGISTRO GUARDADO!";
+                        System.out.println("GUARDADO");
+                    } else {
+                        request.setAttribute("error", "REGISTRO DUPLICADO: '" + ex.getNombreDelExamen() + "'");
+                    }   titulo = "Agendar nueva CITA";
+                    link = "/nuevo/examen_nuevo.jsp";
+                    break;
+                default:
+                    break;
             }
             conn.close();
 
@@ -76,6 +82,7 @@ public class ExamenesGestor extends ServletComun {//7
 
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }

@@ -9,7 +9,7 @@
     <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una cita médica</a>
     <a href="<%=request.getContextPath()%>/">Agendar examen en el laboratorio</a>
     <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=mibusqueda">Ver mis citas médicas</a>
-    <a href="<%=request.getContextPath()%>/">Ver mis citas en el laboratorio</a>
+    <a href="<%=request.getContextPath()%>/PacienteGestor?accion=">Ver mis citas en el laboratorio</a>
     <a href="<%=request.getContextPath()%>/PacienteGestor?accion=historial">Mi historial médico</a>
 </div>
 

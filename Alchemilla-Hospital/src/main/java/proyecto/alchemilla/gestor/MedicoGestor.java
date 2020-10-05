@@ -14,7 +14,6 @@ import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
-import proyecto.alchemilla.sesion.Login;
 
 @WebServlet(name = "MedicoGestor", urlPatterns = {"/MedicoGestor"})
 public class MedicoGestor extends ServletComun {//7
@@ -22,16 +21,24 @@ public class MedicoGestor extends ServletComun {//7
     private String almacenaje;
     private String alamacenajeDos;
     private HttpSession hs ;
+    private String accion;
+    private String accionDos;
+    private String titulo;
+    private String link;
+    private String mensaje;
+    
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         validar(request, response);
-        String accion = request.getParameter("accion");
-        String accionDos = request.getParameter("nombre_de_usuario");
-        String titulo = "";
-        String link = "";
-        String mensaje = "";
+        accion = request.getParameter("accion");
+        accionDos = request.getParameter("nombre_de_usuario");
+        titulo = "";
+        link = "";
+        mensaje = "";
         almacenaje = accionDos;
+        
         try {
             Connection conn = Conexion.getConnection();
             request.setAttribute("UG", "activo");
@@ -51,8 +58,6 @@ public class MedicoGestor extends ServletComun {//7
             }
 
             else if (accion.equals("lista")) {
-//                   hs = request.getSession();
-//                  System.out.println(getHs().getAttribute("PUENTE"));
 
                 List<Medico> lista = UsuarioUtilidad.getListaMedico(conn);
                 mensaje = "no hay informacion";
@@ -104,6 +109,7 @@ public class MedicoGestor extends ServletComun {//7
 
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }

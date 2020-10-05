@@ -57,19 +57,14 @@ public class CitaMedicaGestor extends ServletComun {//7
 
             switch (accion) {
                 case "mibusqueda":
-                    try {
-                   request.getRequestDispatcher("/usuario/contenidoBusqueda.jsp").forward(request, response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
+                    request.getRequestDispatcher("/busqueda/contenidoBusqueda.jsp").forward(request, response);
+                    break;
                 case "miCita": 
-
                     try {
-                        hs = request.getSession();
-                          getHs().getAttribute("PUENTE");
-                          String email = getHs().getAttribute("PUENTE").toString();
-                    List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, email, accionDos, accionTres, accionCuatro);
+                    hs = request.getSession();
+                    getHs().getAttribute("PUENTE");
+                    String emailL = getHs().getAttribute("PUENTE").toString();
+                    List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, emailL, accionDos, accionTres, accionCuatro);
                     mensaje = "no hay informacion";
                     if (miCita.size() > 0) {
                         mensaje = miCita.size() + (miCita.size() > 1 ? "registros" : "registro");
@@ -79,15 +74,14 @@ public class CitaMedicaGestor extends ServletComun {//7
                     link = "/usuario/miCita.jsp";
 
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                    request.getRequestDispatcher("/usuario/mibusqueda_cita.jsp").forward(request, response);
+                    request.getRequestDispatcher("/busqueda/mibusqueda_cita.jsp").forward(request, response);
                     request.setAttribute("error", "No Tiene cita para tal fecha/hora");
                 }
 
                 break;
 
                 case "comprobar":
-                    request.getRequestDispatcher("/usuario/busqueda_cita.jsp").forward(request, response);
+                    request.getRequestDispatcher("/busqueda/busqueda_cita.jsp").forward(request, response);
                     break;
 
                 case "verificar":       
@@ -108,7 +102,7 @@ public class CitaMedicaGestor extends ServletComun {//7
                     }
                 } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
 
-                    request.getRequestDispatcher("/usuario/busqueda_cita.jsp").forward(request, response);
+                    request.getRequestDispatcher("/busqueda/busqueda_cita.jsp").forward(request, response);
                     request.setAttribute("error", "Los datos ingresados no coinciden en nuestra base de datos");
 
                 }

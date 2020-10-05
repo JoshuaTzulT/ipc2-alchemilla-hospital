@@ -12,6 +12,7 @@ public class Medico {
     private String horarioDeAtencionFinal;
     private String fechaDeInicio;
     private String telefono;
+    private String password;
     public String getNombre() {
         return nombre;
     }

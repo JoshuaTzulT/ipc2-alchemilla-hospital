@@ -81,6 +81,7 @@ public class UsuarioGestion extends ServletComun {//7
 
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }

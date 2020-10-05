@@ -18,11 +18,6 @@ import proyecto.alchemilla.entidades.Usuario;
 
 public class UsuarioUtilidad {
 
-    public static void main(String args[]) throws SQLException, ClassNotFoundException {
-        Connection con = Conexion.getConnection();
-        revisarUsuario(con, "6tht", "DFASDFADS");
-    }
-
     public static String revisarUsuario(Connection con, String usuario, String password) throws SQLException {
         int j = 1;
         switch (j) {
@@ -41,7 +36,7 @@ public class UsuarioUtilidad {
                     j = 2;
                 }
             }
-            
+
             case 2: {
                 String sql = "SELECT nombre, "
                         + "pass "
@@ -255,6 +250,119 @@ public class UsuarioUtilidad {
         }
         return lista;
     }
+    
+//    public static void main(String args[]) throws SQLException, ClassNotFoundException{
+//        Connection con = Conexion.getConnection();
+//        getListaHistorialCita(con, "Z");
+//    }
+
+    public static List<Cita> getListaHistorialCita(Connection con, String email) throws SQLException {
+        System.out.println("HOLA EL EMAIL ES :" + email);
+        String primerQuery = "SELECT id_paciente FROM paciente WHERE email = ? ";
+        PreparedStatement psP = con.prepareStatement(primerQuery);
+        psP.setString(1, email);
+        ResultSet rsP = psP.executeQuery();
+        String id = "";
+        if (rsP.next()) {
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getString("id_paciente"));
+            id = rsP.getString("id_paciente");
+        }
+
+        String query = "SELECT "
+                + "paciente.nombre, "
+                + "medico.nombre, "
+                + "cita.tipo_de_consulta, "
+                + "cita.fecha, "
+                + "cita.hora, "
+                + "consulta.costo "
+                + "FROM "
+                + "paciente "
+                + "INNER JOIN "
+                + "cita ON paciente.id_paciente = cita.id_paciente "
+                + "JOIN "
+                + "medico ON medico.id_medico = cita.id_medico "
+                + "JOIN "
+                + "consulta ON consulta.tipo_de_consulta = cita.tipo_de_consulta "
+                +"WHERE paciente.id_paciente = ? "
+                + "ORDER BY cita.fecha DESC";
+
+        System.out.println(query);
+        PreparedStatement ps = con.prepareStatement(query);
+        int i = 1;
+        ps.setString(i++, id);
+        System.out.println(ps);
+        ResultSet rs = ps.executeQuery();
+        System.out.println(rs);
+        List<Cita> lista = new ArrayList<>();
+        while (rs.next()) {
+            Cita cm = new Cita();
+            cm.setNombreDelPaciente(rs.getString("paciente.nombre"));
+            cm.setNombreDelMedico(rs.getString("medico.nombre"));
+            cm.setTipoDeConsulta(rs.getString("cita.tipo_de_consulta"));
+            cm.setFecha(rs.getString("cita.fecha"));
+            cm.setHora(rs.getString("cita.hora"));
+            cm.setCosto(Float.parseFloat(rs.getString("consulta.costo")));
+            lista.add(cm);
+        }
+        return lista;
+    }
+    public static List<Cita> getListaHistorialLaboratorio(Connection con, String email) throws SQLException {
+        System.out.println("HOLA EL EMAIL ES :" + email);
+        String primerQuery = "SELECT id_paciente FROM paciente WHERE email = ? ";
+        PreparedStatement psP = con.prepareStatement(primerQuery);
+        psP.setString(1, email);
+        ResultSet rsP = psP.executeQuery();
+        String id = "";
+        if (rsP.next()) {
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getInt("id_paciente"));
+            System.out.println(rsP.getString("id_paciente"));
+            id = rsP.getString("id_paciente");
+        }
+
+        String query = "SELECT "
+                + "paciente.nombre, "
+                + "medico.nombre, "
+                + "cita.tipo_de_consulta, "
+                + "cita.fecha, "
+                + "cita.hora, "
+                + "consulta.costo "
+                + "FROM "
+                + "paciente "
+                + "INNER JOIN "
+                + "cita ON paciente.id_paciente = cita.id_paciente "
+                + "JOIN "
+                + "medico ON medico.id_medico = cita.id_medico "
+                + "JOIN "
+                + "consulta ON consulta.tipo_de_consulta = cita.tipo_de_consulta "
+                +"WHERE paciente.id_paciente = ? "
+                + "ORDER BY cita.fecha DESC";
+
+        System.out.println(query);
+        PreparedStatement ps = con.prepareStatement(query);
+        int i = 1;
+        ps.setString(i++, id);
+        System.out.println(ps);
+        ResultSet rs = ps.executeQuery();
+        System.out.println(rs);
+        List<Cita> lista = new ArrayList<>();
+        while (rs.next()) {
+            Cita cm = new Cita();
+            cm.setNombreDelPaciente(rs.getString("paciente.nombre"));
+            cm.setNombreDelMedico(rs.getString("medico.nombre"));
+            cm.setTipoDeConsulta(rs.getString("cita.tipo_de_consulta"));
+            cm.setFecha(rs.getString("cita.fecha"));
+            cm.setHora(rs.getString("cita.hora"));
+            cm.setCosto(Float.parseFloat(rs.getString("consulta.costo")));
+            lista.add(cm);
+        }
+        return lista;
+    }
+
 
     public static List<Cita> getListaCita(Connection con) throws SQLException {
         String query = "SELECT codigo_cita, "
@@ -280,6 +388,7 @@ public class UsuarioUtilidad {
         return lista;
     }
 
+/////////////////////////POSIBLE METÓDO INUTIL///////////////////////////////////////////////////////////////////////////////
     public static List<Cita> getListaCitaExistente(Connection con, String nombre, String fecha, String hora) throws SQLException {
         System.out.println("SHUB NIGGURATH");
         String query = "SELECT medico.nombre, "

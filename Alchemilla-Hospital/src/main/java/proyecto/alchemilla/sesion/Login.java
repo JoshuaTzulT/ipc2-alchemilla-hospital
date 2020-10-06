@@ -22,9 +22,8 @@ public class Login extends HttpServlet {
     private HttpSession emailPuente;
     private String almacenajeCorreo;
     CitaMedicaGestor cmg = new CitaMedicaGestor();
-    Medico medico = new Medico();
-    Administrador admin = new Administrador();
-    Usuario usu = new Usuario();
+   
+    
     UsuarioUtilidad uti = new UsuarioUtilidad();
     private String usuario;
     private String password;
@@ -44,6 +43,7 @@ public class Login extends HttpServlet {
 //            Usuario usu = UsuarioUtilidad.revisarLoginUsuario(conn, usuario, password);
 
             if (uti != null && uti.revisarUsuario(conn, usuario, password).equals("usuario")) {
+                 Usuario usu = new Usuario();
                 usu = uti.revisarLoginUsuario(conn, usuario, password);
                 System.out.println("usuario");
                 request.getSession().setAttribute("USUARIO_ACTUAL", usu);
@@ -52,9 +52,8 @@ public class Login extends HttpServlet {
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                // doGet(request, response);
 
-            }  
-                
-                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("medico")){
+            }else if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("medico")){
+                     Medico medico = new Medico();
                     medico = uti.revisarLoginMedico(conn, usuario, password);
                 System.out.println("MEDICO");
                 request.getSession().setAttribute("MEDICO_ACTUAL", medico);
@@ -63,22 +62,24 @@ public class Login extends HttpServlet {
                request.getRequestDispatcher("/principal/index_1.jsp").forward(request, response);
                // request.getRequestDispatcher("HOLA.jsp").forward(request, response);
                 
-            }
-                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("laboratorista")){
-                request.getSession().setAttribute("LABORATORISTA_ACTUAL", uti);
-                conn.close();
-                request.setAttribute("PRINCIPAL", "activo");
-                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
-                
-                
-            }
-                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("administrador")){
-                request.getSession().setAttribute("ADMIN_ACTUAL", uti);
-                conn.close();
-                request.setAttribute("PRINCIPAL", "activo");
-                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
-                
-            }else {
+          }
+
+//else if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("laboratorista")){
+//                    Administrador admin = new Administrador();
+//                request.getSession().setAttribute("LABORATORISTA_ACTUAL", admin);
+//                conn.close();
+//                request.setAttribute("PRINCIPAL", "activo");
+//                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+//                
+//                
+//            }else if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("administrador")){
+//                request.getSession().setAttribute("ADMIN_ACTUAL", uti);
+//                conn.close();
+//                request.setAttribute("PRINCIPAL", "activo");
+//                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
+//                
+//            }
+            else {
                 request.setAttribute("error", "USUARIO INCORRECTO O CONTRASEÑA INCORRECTA");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }

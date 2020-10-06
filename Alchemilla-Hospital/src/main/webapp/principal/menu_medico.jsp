@@ -4,13 +4,9 @@
 <link rel="stylesheet" href="CSS/estilo.css"/>
 <div id="nav" class="vmenu">
     <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/MenuGestor?accion=principal">Inicio</a>  
-    <a href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">Nuestros Médicos</a>
-    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=comprobar">Disponibilidad de horarios</a>
-    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una cita médica</a>
-    <a href="<%=request.getContextPath()%>/">Agendar examen en el laboratorio</a>
-    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=mibusqueda">Ver mis citas médicas</a>
-    <a href="<%=request.getContextPath()%>/PacienteGestor?accion=">Ver mis citas en el laboratorio</a>
-    <a href="<%=request.getContextPath()%>/PacienteGestor?accion=historial">Mi historial médico</a>
+    <a href="<%=request.getContextPath()%>/MedicoGestor?accion=lista">Buscar pacientes</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=comprobar">Solicitar exámen para un paciente</a>
+    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=nuevo">Agendar una nueva consulta</a>
 </div>
 
 <script>

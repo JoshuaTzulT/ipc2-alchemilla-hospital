@@ -18,101 +18,92 @@ import proyecto.alchemilla.entidades.Paciente;
 import proyecto.alchemilla.entidades.Usuario;
 
 public class UsuarioUtilidad {
-      Usuario u = new Usuario();
-    private boolean estado;
+
+    Usuario u = new Usuario();
 
     public String revisarUsuario(Connection con, String usuario, String password) throws SQLException {
         System.out.println("ACA ENTRAMOS ");
-        int j = 1;
-        estado = true;
 
-        while (estado == true) {
-            j++;
-            if (estado == false) {
-                break;
+        for (int i = 0; i <= 4; i++) {
+            if (i == 1) {
+                System.out.println("UNO");
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM usuario WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                System.out.println(sql);
+                int j = 1;
+                ps.setString(j++, usuario);
+                ps.setString(j++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    u.setNombreDeUsuario(rs.getString("nombre"));
+                    u.setEmail("alias");
+                    return "usuario";
+                }
+            }
+            if (i == 2) {
+                System.out.println("DOS");
+                String sql = "SELECT nombre, "
+                        + "pass "
+                        + "FROM medico WHERE email = ? and pass = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                int j = 1;
+                ps.setString(j++, usuario);
+                ps.setString(j++, password);
+                ResultSet rs = ps.executeQuery();
+                System.out.println(sql);
+                if (rs.next()) {
+                    u.setNombreDeUsuario(rs.getString("nombre"));
+                    u.setEmail("alias");
+                    return "medico";
+                }
+                if (rs.next()) {
+                    break;
+                }
+            }
+            if (i == 3) {
+                System.out.println("TRES");
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM laboratorista WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                System.out.println(sql);
+                int j = 1;
+                ps.setString(j++, usuario);
+                ps.setString(j++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    u.setNombreDeUsuario(rs.getString("nombre"));
+                    u.setEmail("alias");
+                    return "laboratorista";
+                }
+                if (rs.next()) {
+                    break;
+                }
             }
 
-            switch (j) {
-                case 1: {
-                    String sql = "SELECT nombre, "
-                            + "passw "
-                            + "FROM usuario WHERE email = ? and passw = ?";
-                    PreparedStatement ps = con.prepareStatement(sql);
-                    System.out.println(sql);
-                    int i = 1;
-                    ps.setString(i++, usuario);
-                    ps.setString(i++, password);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next()) {
-                      
-                        u.setNombreDeUsuario(rs.getString("nombre"));
-                        u.setEmail("alias");
-                        estado = false;
-                        return "usuario";
-                    }
+            if (i == 4) {
+                System.out.println("CUATRO");
+                String sql = "SELECT nombre, "
+                        + "passw "
+                        + "FROM administrador WHERE email = ? and passw = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                System.out.println(sql);
+                int j = 1;
+                ps.setString(j++, usuario);
+                ps.setString(j++, password);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    u.setNombreDeUsuario(rs.getString("nombre"));
+                    u.setEmail("alias");
+                    return "administrador";
+                }
+                if (rs.next()) {
                     break;
                 }
-
-                case 2: {
-                    String sql = "SELECT nombre, "
-                            + "pass "
-                            + "FROM medico WHERE email = ? and pass = ?";
-                    PreparedStatement ps = con.prepareStatement(sql);
-                    int i = 1;
-                    ps.setString(i++, usuario);
-                    ps.setString(i++, password);
-                    ResultSet rs = ps.executeQuery();
-                    System.out.println(sql);
-                    if (rs.next()) {
-                        u.setNombreDeUsuario(rs.getString("nombre"));
-                        u.setEmail("alias");
-                        estado = false;
-                        return "medico";
-                    }
-                    break;
-                }
-                case 3: {
-                    String sql = "SELECT nombre, "
-                            + "passw "
-                            + "FROM laboratorista WHERE email = ? and passw = ?";
-                    PreparedStatement ps = con.prepareStatement(sql);
-                    System.out.println(sql);
-                    int i = 1;
-                    ps.setString(i++, usuario);
-                    ps.setString(i++, password);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next()) {
-                        u.setNombreDeUsuario(rs.getString("nombre"));
-                        u.setEmail("alias");
-                        estado = false;
-                        return "laboratorista";
-                    }
-                    break;
-                }
-                case 4: {
-                    String sql = "SELECT nombre, "
-                            + "passw "
-                            + "FROM administrador WHERE email = ? and passw = ?";
-                    PreparedStatement ps = con.prepareStatement(sql);
-                    System.out.println(sql);
-                    int i = 1;
-                    ps.setString(i++, usuario);
-                    ps.setString(i++, password);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next()) {
-                        u.setNombreDeUsuario(rs.getString("nombre"));
-                        u.setEmail("alias");
-                        estado = false;
-                        return "administrador";
-                    }
-                    break;
-                }
-                default:
-                    System.out.println("SI NO HAY NADA");
-                    break;
             }
         }
-
         return "nada";
     }
 
@@ -129,11 +120,11 @@ public class UsuarioUtilidad {
         if (rs.next()) {
             Usuario u = new Usuario();
             u.setNombreDeUsuario(rs.getString("nombre"));
-            u.setEmail("alias");
             return u;
         }
         return null;
     }
+
     public Medico revisarLoginMedico(Connection con, String usuario, String password) throws SQLException {
         String sql = "SELECT nombre, "
                 + "pass "
@@ -192,7 +183,7 @@ public class UsuarioUtilidad {
         }
         return null;
     }
-    
+
     public static List<Medico> getListaMedico(Connection con) throws SQLException {
         String query = "SELECT id_medico, "
                 + " nombre, "

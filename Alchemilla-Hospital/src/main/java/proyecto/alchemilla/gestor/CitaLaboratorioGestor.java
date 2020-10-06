@@ -58,7 +58,7 @@ public class CitaLaboratorioGestor extends ServletComun {//7
                 case "miCita":
                     hs = request.getSession();
                     String email = getHs().getAttribute("PUENTE").toString();
-//                    List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, email);
+                   List<Cita> miCita = UsuarioUtilidad.getMiListaCita(conn, email, accionDos, accionTres, accionCuatro);
                     mensaje = "no hay informacion";
 //                    if (miCita.size() > 0) {
 //                        mensaje = miCita.size() + (miCita.size() > 1 ? "registros" : "registro");

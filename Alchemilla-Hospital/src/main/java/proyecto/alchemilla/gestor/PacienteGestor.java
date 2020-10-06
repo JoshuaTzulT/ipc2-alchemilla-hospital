@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
 import proyecto.alchemilla.entidades.Cita;
+import proyecto.alchemilla.entidades.CitaLaboratorio;
 import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.servlets.ServletComun;
 
@@ -28,7 +29,6 @@ public class PacienteGestor extends ServletComun {//7
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         validar(request, response);
         accion = request.getParameter("accion");
         titulo = "";
@@ -58,28 +58,30 @@ public class PacienteGestor extends ServletComun {//7
                     link = "/historial/contextocitahisto.jsp";
 
                 } catch (SQLException e) {
-                    request.getRequestDispatcher("/usuario/mibusqueda_cita.jsp").forward(request, response);
+                    e.printStackTrace();
+                    request.getRequestDispatcher("/busqueda/mibusqueda_cita.jsp").forward(request, response);
                     request.setAttribute("error", "No Tiene cita para tal fecha/hora");
                 }
 
                 break;
                 case "historialexam":
-                    
+                    System.out.println("ENTRA ACA");
                     try {
                     hs = request.getSession();
                     getHs().getAttribute("PUENTE");
                     String email = getHs().getAttribute("PUENTE").toString();
-                    List<Cita> miCita = UsuarioUtilidad.getListaHistorialCita(conn, email);
+                    List<CitaLaboratorio> miCita = UsuarioUtilidad.getListaHistorialLaboratorio(conn, email);
                     mensaje = "no hay informacion";
                     if (miCita.size() > 0) {
                         mensaje = miCita.size() + (miCita.size() > 1 ? "registros" : "registro");
                     }
                     titulo = "LISTADO";
                     request.setAttribute("lista", miCita);
-                    link = "/historial/contextocitahisto.jsp";
+                    link = "/historial/contextocitalab.jsp";
 
                 } catch (SQLException e) {
-                    request.getRequestDispatcher("/usuario/mibusqueda_cita.jsp").forward(request, response);
+                    e.printStackTrace();
+                    request.getRequestDispatcher("/busqueda/mibusqueda_cita.jsp").forward(request, response);
                     request.setAttribute("error", "No Tiene cita para tal fecha/hora");
                 }
 

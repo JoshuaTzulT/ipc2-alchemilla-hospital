@@ -5,7 +5,7 @@
 <div id="nav" class="vmenu">
     <a class="menu_link${PRINCIPAL}" href="<%=request.getContextPath()%>/MenuGestor?accion=principal">Inicio</a>     
     <a href="<%=request.getContextPath()%>/PacienteGestor?accion=historialcita">Mi historial de citas médicas</a>
-    <a href="<%=request.getContextPath()%>/CitaMedicaGestor?accion=historialexam">Mi historial de examenes médicos</a>
+    <a href="<%=request.getContextPath()%>/PacienteGestor?accion=historialexam">Mi historial de examenes médicos</a>
 </div>
 
 <script>

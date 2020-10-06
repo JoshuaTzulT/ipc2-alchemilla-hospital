@@ -3,7 +3,7 @@
 
 <%@page import="java.util.List"%>
 <div id="principal" >
-    <table border="1">
+    <table class ="oscuridad" border="1">
         <thead>
             <tr>
                 <th>#</th>

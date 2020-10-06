@@ -74,14 +74,14 @@ public class CitaMedicaGestor extends ServletComun {//7
                     link = "/usuario/miCita.jsp";
 
                 } catch (SQLException e) {
-                    request.getRequestDispatcher("/busqueda/mibusqueda_cita.jsp").forward(request, response);
+                    request.getRequestDispatcher("/usuario/miCita.jsp").forward(request, response);
                     request.setAttribute("error", "No Tiene cita para tal fecha/hora");
                 }
 
                 break;
 
                 case "comprobar":
-                    request.getRequestDispatcher("/busqueda/busqueda_cita.jsp").forward(request, response);
+                    request.getRequestDispatcher("/busqueda/contexto_busqueda_cita.jsp").forward(request, response);
                     break;
 
                 case "verificar":       
@@ -157,7 +157,7 @@ public class CitaMedicaGestor extends ServletComun {//7
             request.setAttribute("TITULO", titulo);
             request.getRequestDispatcher(link).forward(request, response);
         } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-            request.setAttribute("Error", e.getMessage());
+            request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/usuario/error.jsp").forward(request, response);
         }
 

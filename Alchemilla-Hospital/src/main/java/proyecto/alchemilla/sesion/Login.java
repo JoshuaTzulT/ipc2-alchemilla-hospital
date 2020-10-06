@@ -12,15 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import proyecto.alchemilla.baseD.Conexion;
 import proyecto.alchemilla.baseD.UsuarioUtilidad;
+import proyecto.alchemilla.entidades.Administrador;
+import proyecto.alchemilla.entidades.Medico;
 import proyecto.alchemilla.entidades.Usuario;
 import proyecto.alchemilla.gestor.CitaMedicaGestor;
-import proyecto.alchemilla.gestor.MedicoGestor;
 
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
     private HttpSession emailPuente;
     private String almacenajeCorreo;
     CitaMedicaGestor cmg = new CitaMedicaGestor();
+    Medico medico = new Medico();
+    Administrador admin = new Administrador();
+    Usuario usu = new Usuario();
+    UsuarioUtilidad uti = new UsuarioUtilidad();
     private String usuario;
     private String password;
 
@@ -30,33 +35,45 @@ public class Login extends HttpServlet {
 
         usuario = request.getParameter("email");
         password = request.getParameter("password");
+        System.out.println("PRIMER:" +usuario);
+        System.out.println("SEGUNDO :" +password);
 
         try {
             Connection conn = Conexion.getConnection();
-            Usuario usu = UsuarioUtilidad.revisarLoginUsuario(conn, usuario, password);
+            uti.revisarUsuario(conn, usuario, password);
+//            Usuario usu = UsuarioUtilidad.revisarLoginUsuario(conn, usuario, password);
 
-            if (usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("usuario")) {
+            if (uti != null && uti.revisarUsuario(conn, usuario, password).equals("usuario")) {
+                usu = uti.revisarLoginUsuario(conn, usuario, password);
+                System.out.println("usuario");
                 request.getSession().setAttribute("USUARIO_ACTUAL", usu);
                 conn.close();
                 request.setAttribute("PRINCIPAL", "activo");
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                // doGet(request, response);
 
-            } else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("medico")){
-                request.getSession().setAttribute("MEDICO_ACTUAL", usu);
+            }  
+                
+                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("medico")){
+                    medico = uti.revisarLoginMedico(conn, usuario, password);
+                System.out.println("MEDICO");
+                request.getSession().setAttribute("MEDICO_ACTUAL", medico);
+                conn.close();
+                request.setAttribute("PRINCIPAL", "activo");
+               request.getRequestDispatcher("/principal/index_1.jsp").forward(request, response);
+               // request.getRequestDispatcher("HOLA.jsp").forward(request, response);
+                
+            }
+                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("laboratorista")){
+                request.getSession().setAttribute("LABORATORISTA_ACTUAL", uti);
                 conn.close();
                 request.setAttribute("PRINCIPAL", "activo");
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                 
-            }else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("laboratorista")){
-                request.getSession().setAttribute("LABORATORISTA_ACTUAL", usu);
-                conn.close();
-                request.setAttribute("PRINCIPAL", "activo");
-                request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
                 
-                
-            }else if(usu != null && UsuarioUtilidad.revisarUsuario(conn, usuario, password).equals("administrador")){
-                request.getSession().setAttribute("ADMIN_ACTUAL", usu);
+            }
+                if(uti != null && uti.revisarUsuario(conn, usuario, password).equals("administrador")){
+                request.getSession().setAttribute("ADMIN_ACTUAL", uti);
                 conn.close();
                 request.setAttribute("PRINCIPAL", "activo");
                 request.getRequestDispatcher("/principal/index.jsp").forward(request, response);
